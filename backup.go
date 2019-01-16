@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"strconv"
+	"time"
 
 	"github.com/brotherlogic/goserver"
 	"github.com/brotherlogic/keystore/client"
@@ -94,6 +95,8 @@ func main() {
 	server.GoServer.KSclient = *keystoreclient.GetClient(server.GetIP)
 
 	server.RegisterServer("backup", false)
+
+	server.RegisterRepeatingTask(server.processFlacs, "process_flacs", time.Minute*5)
 
 	fmt.Printf("%v", server.Serve())
 }
