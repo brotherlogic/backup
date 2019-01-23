@@ -94,7 +94,10 @@ func main() {
 
 	server.GoServer.KSclient = *keystoreclient.GetClient(server.GetIP)
 
-	server.RegisterServer("backup", false)
+	err := server.RegisterServer("backup", false)
+	if err != nil {
+		log.Fatalf("Unable to register: %v", err)
+	}
 
 	server.RegisterRepeatingTask(server.processFlacs, "process_flacs", time.Minute*5)
 
