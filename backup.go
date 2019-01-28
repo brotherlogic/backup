@@ -9,13 +9,14 @@ import (
 	"time"
 
 	"github.com/brotherlogic/goserver"
+	"github.com/brotherlogic/goserver/utils"
 	"github.com/brotherlogic/keystore/client"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
+	pb "github.com/brotherlogic/backup/proto"
 	pbcdp "github.com/brotherlogic/cdprocessor/proto"
 	pbg "github.com/brotherlogic/goserver/proto"
-	"github.com/brotherlogic/goserver/utils"
 )
 
 type cdprocessor interface {
@@ -45,6 +46,7 @@ type Server struct {
 	*goserver.GoServer
 	flacsToBackup int64
 	cdprocessor   cdprocessor
+	config        *pb.Config
 }
 
 // Init builds the server
@@ -53,6 +55,7 @@ func Init() *Server {
 		&goserver.GoServer{},
 		int64(0),
 		&prodCdprocessor{},
+		&pb.Config{},
 	}
 	return s
 }
@@ -76,6 +79,7 @@ func (s *Server) Mote(ctx context.Context, master bool) error {
 func (s *Server) GetState() []*pbg.State {
 	return []*pbg.State{
 		&pbg.State{Key: "flacs_to_backup", Value: s.flacsToBackup},
+		&pbg.State{Key: "specs", Value: int64(len(s.config.Specs))},
 	}
 }
 
