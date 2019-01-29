@@ -1,22 +1,30 @@
 package main
 
 import (
-	"golang.org/x/net/context"
+	"os"
+	"path/filepath"
+	"regexp"
 
-	pbcdp "github.com/brotherlogic/cdprocessor/proto"
+	pb "github.com/brotherlogic/backup/proto"
 )
 
-func (s *Server) processFlacs(ctx context.Context) {
-	ripped, err := s.cdprocessor.getRipped(ctx, &pbcdp.GetRippedRequest{})
-	flacs := 0
-	if err == nil {
-		for _, r := range ripped.Ripped {
-			for _, t := range r.Tracks {
-				if len(t.FlacPath) > 0 {
-					flacs++
-				}
+func (s *Server) mapConfig(mapping *pb.BackupSpec) ([]string, error) {
+	files := []string{}
+
+	err := filepath.Walk(mapping.BaseDirectory, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if !info.IsDir() {
+			match, _ := regexp.MatchString(mapping.MatchRegex, path)
+			if match {
+				files = append(files, path[len(mapping.BaseDirectory):])
 			}
 		}
-	}
-	s.flacsToBackup = int64(flacs)
+
+		return nil
+	})
+
+	return files, err
 }
