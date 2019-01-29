@@ -55,9 +55,9 @@ func (s *Server) Mote(ctx context.Context, master bool) error {
 
 // GetState gets the state of the server
 func (s *Server) GetState() []*pbg.State {
-	_, err := s.mapConfig(s.config.Specs[0])
+	files, _ := s.mapConfig(s.config.Specs[0])
 	return []*pbg.State{
-		&pbg.State{Key: "mapping_error", Text: fmt.Sprintf("%v", err)},
+		&pbg.State{Key: "mapping", Value: int64(len(files))},
 		&pbg.State{Key: "specs", Value: int64(len(s.config.Specs))},
 	}
 }
