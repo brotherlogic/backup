@@ -1,40 +1,46 @@
 package main
 
 import (
+	"os"
 	"testing"
 
-	"golang.org/x/net/context"
-
-	pbcdp "github.com/brotherlogic/cdprocessor/proto"
+	pb "github.com/brotherlogic/backup/proto"
 )
-
-type testCdprocessor struct{}
-
-func (p *testCdprocessor) getRipped(ctx context.Context, req *pbcdp.GetRippedRequest) (*pbcdp.GetRippedResponse, error) {
-	return &pbcdp.GetRippedResponse{
-		Ripped: []*pbcdp.Rip{
-			&pbcdp.Rip{
-				Tracks: []*pbcdp.Track{
-					&pbcdp.Track{
-						FlacPath: "/yes/",
-					},
-				},
-			},
-		},
-	}, nil
-}
 
 func InitTestServer() *Server {
 	s := Init()
-	s.cdprocessor = &testCdprocessor{}
+	s.SkipLog = true
 	return s
 }
 
-func TestCountFlacs(t *testing.T) {
+func TestSpecRead(t *testing.T) {
 	s := InitTestServer()
-	s.processFlacs(context.Background())
 
-	if s.flacsToBackup != 1 {
-		t.Errorf("Wrong number of backups: %v", s.flacsToBackup)
+	pwd, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("Unable to get working dir")
+	}
+
+	files, err := s.mapConfig(&pb.BackupSpec{BaseDirectory: pwd + "/testDir/", MatchRegex: ".*blah$"})
+	if err != nil {
+		t.Fatalf("Error mapping config: %v", err)
+	}
+
+	if len(files) != 1 || files[0] != "testfile.blah" {
+		t.Errorf("Error running mapper: %v", files)
+	}
+}
+
+func TestSpecReadWithMadeupDirectory(t *testing.T) {
+	s := InitTestServer()
+
+	pwd, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("Unable to get working dir")
+	}
+
+	files, err := s.mapConfig(&pb.BackupSpec{BaseDirectory: pwd + "/testDirMadeUp/", MatchRegex: ".*blah$"})
+	if err == nil {
+		t.Errorf("Bad spec did not fail: %v", files)
 	}
 }
