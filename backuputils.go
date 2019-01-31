@@ -1,13 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"regexp"
 
 	pb "github.com/brotherlogic/backup/proto"
 )
+
+func match(reg, path string) bool {
+	match, _ := regexp.MatchString(reg, path)
+	return match
+}
 
 func (s *Server) mapConfig(mapping *pb.BackupSpec) ([]string, error) {
 	files := []string{}
@@ -18,9 +22,7 @@ func (s *Server) mapConfig(mapping *pb.BackupSpec) ([]string, error) {
 		}
 
 		if !info.IsDir() {
-			match, _ := regexp.MatchString(mapping.MatchRegex, path)
-			s.Log(fmt.Sprintf("Match %v -> %v", path, match))
-			if match {
+			if match(mapping.MatchRegex, path) {
 				files = append(files, path)
 			}
 		}
