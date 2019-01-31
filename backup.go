@@ -30,7 +30,7 @@ func Init() *Server {
 				&pb.BackupSpec{
 					Server:        "stack1",
 					BaseDirectory: "/media/music/",
-					MatchRegex:    "*.flac$",
+					MatchRegex:    ".*flac$",
 				},
 			},
 		},

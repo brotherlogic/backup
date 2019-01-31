@@ -44,3 +44,9 @@ func TestSpecReadWithMadeupDirectory(t *testing.T) {
 		t.Errorf("Bad spec did not fail: %v", files)
 	}
 }
+
+func TestMatch(t *testing.T) {
+	if !match(".*flac$", "/media/music/2114418_2/track11.cdda.flac") {
+		t.Errorf("Nope")
+	}
+}
