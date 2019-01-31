@@ -19,7 +19,7 @@ func (s *Server) mapConfig(mapping *pb.BackupSpec) ([]string, error) {
 		if !info.IsDir() {
 			match, _ := regexp.MatchString(mapping.MatchRegex, path)
 			if match {
-				files = append(files, path[len(mapping.BaseDirectory):])
+				files = append(files, path)
 			}
 		}
 
