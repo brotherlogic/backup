@@ -55,8 +55,8 @@ func (s *Server) Mote(ctx context.Context, master bool) error {
 
 // GetState gets the state of the server
 func (s *Server) GetState() []*pbg.State {
-	files, _ := s.mapConfig(s.config.Specs[0])
-	example := "No files found"
+	files, err := s.mapConfig(s.config.Specs[0])
+	example := fmt.Sprintf("%v", err)
 	if len(files) > 0 {
 		example = files[0]
 	}
