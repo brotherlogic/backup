@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -18,8 +19,9 @@ func (s *Server) mapConfig(mapping *pb.BackupSpec) ([]string, error) {
 
 		if !info.IsDir() {
 			match, _ := regexp.MatchString(mapping.MatchRegex, path)
+			s.Log(fmt.Sprintf("Match %v -> %v", path, match))
 			if match {
-				files = append(files, path[len(mapping.BaseDirectory):])
+				files = append(files, path)
 			}
 		}
 

@@ -26,7 +26,7 @@ func TestSpecRead(t *testing.T) {
 		t.Fatalf("Error mapping config: %v", err)
 	}
 
-	if len(files) != 1 || files[0] != "testfile.blah" {
+	if len(files) != 1 || files[0][len(files[0])-13:] != "testfile.blah" {
 		t.Errorf("Error running mapper: %v", files)
 	}
 }
