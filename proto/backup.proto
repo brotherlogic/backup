@@ -3,12 +3,5 @@ syntax = "proto3";
 package backup;
 
 message Config {
-  repeated BackupSpec specs = 1;
-}
-
-message BackupSpec {
-  string server = 1;
-  string base_directory = 2;
-  string match_regex = 3;
-  string target_directory = 4;
+  int64 last_backup = 2;
 }
