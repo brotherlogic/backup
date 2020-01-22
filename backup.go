@@ -23,16 +23,8 @@ type Server struct {
 // Init builds the server
 func Init() *Server {
 	s := &Server{
-		&goserver.GoServer{},
-		&pb.Config{
-			Specs: []*pb.BackupSpec{
-				&pb.BackupSpec{
-					Server:        "stack1",
-					BaseDirectory: "/media/music/",
-					MatchRegex:    ".*flac$",
-				},
-			},
-		},
+		GoServer: &goserver.GoServer{},
+		config:   &pb.Config{},
 	}
 	return s
 }
@@ -59,15 +51,8 @@ func (s *Server) Mote(ctx context.Context, master bool) error {
 
 // GetState gets the state of the server
 func (s *Server) GetState() []*pbg.State {
-	files, err := s.mapConfig(s.config.Specs[0])
-	example := fmt.Sprintf("%v", err)
-	if len(files) > 0 {
-		example = files[0]
-	}
 	return []*pbg.State{
-		&pbg.State{Key: "mapping", Value: int64(len(files))},
-		&pbg.State{Key: "specs", Value: int64(len(s.config.Specs))},
-		&pbg.State{Key: "example_file", Text: example},
+		&pbg.State{Key: "last_sync", TimeValue: s.config.GetLastBackup()},
 	}
 }
 
