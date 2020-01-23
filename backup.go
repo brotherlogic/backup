@@ -69,9 +69,9 @@ func main() {
 	server.PrepServer()
 	server.Register = server
 
-	err := server.RegisterServer("backup", false)
+	err := server.RegisterServerV2("backup", false, false)
 	if err != nil {
-		log.Fatalf("Unable to register: %v", err)
+		return
 	}
 
 	fmt.Printf("%v", server.Serve())
