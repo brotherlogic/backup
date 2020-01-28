@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"os"
 	"testing"
 )
 
@@ -12,5 +14,9 @@ func InitTestServer() *Server {
 
 func TestSpecRead(t *testing.T) {
 	s := InitTestServer()
-	s.doNothing()
+	fi, err := os.Stat("backuputils_test.go")
+	err = s.processFile("path", fi, fmt.Errorf("What"))
+	if err != nil {
+		t.Errorf("Bad pull: %v", err)
+	}
 }
