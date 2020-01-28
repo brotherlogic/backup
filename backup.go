@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"path/filepath"
+	"time"
 
 	"github.com/brotherlogic/goserver"
 	"golang.org/x/net/context"
@@ -56,6 +58,10 @@ func (s *Server) GetState() []*pbg.State {
 	}
 }
 
+func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
+	return time.Now().Add(time.Hour * 24), filepath.Walk("/home/media/raid1/", s.processFile)
+}
+
 func main() {
 	var quiet = flag.Bool("quiet", false, "Show all output")
 	flag.Parse()
@@ -73,6 +79,8 @@ func main() {
 	if err != nil {
 		return
 	}
+
+	server.RegisterLockingTask(server.fsWalk, "fs_walk")
 
 	fmt.Printf("%v", server.Serve())
 }
