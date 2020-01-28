@@ -4,4 +4,19 @@ package backup;
 
 message Config {
   int64 last_backup = 2;
+  repeated BackupFile files = 3;
+  
+}
+
+message BackupFile {
+  string path = 1;
+  int64 date_seen = 2;
+
+  enum BackupState {
+    UNKNOWN = 0;
+    NOT_BACKED_UP = 1;
+    BACKED_UP = 2;
+  }
+
+  BackupState state = 3;
 }

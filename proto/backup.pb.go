@@ -20,11 +20,40 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+type BackupFile_BackupState int32
+
+const (
+	BackupFile_UNKNOWN       BackupFile_BackupState = 0
+	BackupFile_NOT_BACKED_UP BackupFile_BackupState = 1
+	BackupFile_BACKED_UP     BackupFile_BackupState = 2
+)
+
+var BackupFile_BackupState_name = map[int32]string{
+	0: "UNKNOWN",
+	1: "NOT_BACKED_UP",
+	2: "BACKED_UP",
+}
+
+var BackupFile_BackupState_value = map[string]int32{
+	"UNKNOWN":       0,
+	"NOT_BACKED_UP": 1,
+	"BACKED_UP":     2,
+}
+
+func (x BackupFile_BackupState) String() string {
+	return proto.EnumName(BackupFile_BackupState_name, int32(x))
+}
+
+func (BackupFile_BackupState) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_65240d19de191688, []int{1, 0}
+}
+
 type Config struct {
-	LastBackup           int64    `protobuf:"varint,2,opt,name=lastBackup,proto3" json:"lastBackup,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	LastBackup           int64         `protobuf:"varint,2,opt,name=last_backup,json=lastBackup,proto3" json:"last_backup,omitempty"`
+	Files                []*BackupFile `protobuf:"bytes,3,rep,name=files,proto3" json:"files,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
 func (m *Config) Reset()         { *m = Config{} }
@@ -59,17 +88,91 @@ func (m *Config) GetLastBackup() int64 {
 	return 0
 }
 
+func (m *Config) GetFiles() []*BackupFile {
+	if m != nil {
+		return m.Files
+	}
+	return nil
+}
+
+type BackupFile struct {
+	Path                 string                 `protobuf:"bytes,1,opt,name=path,proto3" json:"path,omitempty"`
+	DateSeen             int64                  `protobuf:"varint,2,opt,name=date_seen,json=dateSeen,proto3" json:"date_seen,omitempty"`
+	State                BackupFile_BackupState `protobuf:"varint,3,opt,name=state,proto3,enum=backup.BackupFile_BackupState" json:"state,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
+}
+
+func (m *BackupFile) Reset()         { *m = BackupFile{} }
+func (m *BackupFile) String() string { return proto.CompactTextString(m) }
+func (*BackupFile) ProtoMessage()    {}
+func (*BackupFile) Descriptor() ([]byte, []int) {
+	return fileDescriptor_65240d19de191688, []int{1}
+}
+
+func (m *BackupFile) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_BackupFile.Unmarshal(m, b)
+}
+func (m *BackupFile) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_BackupFile.Marshal(b, m, deterministic)
+}
+func (m *BackupFile) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BackupFile.Merge(m, src)
+}
+func (m *BackupFile) XXX_Size() int {
+	return xxx_messageInfo_BackupFile.Size(m)
+}
+func (m *BackupFile) XXX_DiscardUnknown() {
+	xxx_messageInfo_BackupFile.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BackupFile proto.InternalMessageInfo
+
+func (m *BackupFile) GetPath() string {
+	if m != nil {
+		return m.Path
+	}
+	return ""
+}
+
+func (m *BackupFile) GetDateSeen() int64 {
+	if m != nil {
+		return m.DateSeen
+	}
+	return 0
+}
+
+func (m *BackupFile) GetState() BackupFile_BackupState {
+	if m != nil {
+		return m.State
+	}
+	return BackupFile_UNKNOWN
+}
+
 func init() {
+	proto.RegisterEnum("backup.BackupFile_BackupState", BackupFile_BackupState_name, BackupFile_BackupState_value)
 	proto.RegisterType((*Config)(nil), "backup.Config")
+	proto.RegisterType((*BackupFile)(nil), "backup.BackupFile")
 }
 
 func init() { proto.RegisterFile("backup.proto", fileDescriptor_65240d19de191688) }
 
 var fileDescriptor_65240d19de191688 = []byte{
-	// 77 bytes of a gzipped FileDescriptorProto
+	// 227 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x49, 0x4a, 0x4c, 0xce,
-	0x2e, 0x2d, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x83, 0xf0, 0x94, 0x34, 0xb8, 0xd8,
-	0x9c, 0xf3, 0xf3, 0xd2, 0x32, 0xd3, 0x85, 0xe4, 0xb8, 0xb8, 0x72, 0x12, 0x8b, 0x4b, 0x9c, 0xc0,
-	0xe2, 0x12, 0x4c, 0x0a, 0x8c, 0x1a, 0xcc, 0x41, 0x48, 0x22, 0x49, 0x6c, 0x60, 0x8d, 0xc6, 0x80,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0xb0, 0xee, 0xe6, 0x6b, 0x48, 0x00, 0x00, 0x00,
+	0x2e, 0x2d, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x83, 0xf0, 0x94, 0x82, 0xb9, 0xd8,
+	0x9c, 0xf3, 0xf3, 0xd2, 0x32, 0xd3, 0x85, 0xe4, 0xb9, 0xb8, 0x73, 0x12, 0x8b, 0x4b, 0xe2, 0x21,
+	0x12, 0x12, 0x4c, 0x0a, 0x8c, 0x1a, 0xcc, 0x41, 0x5c, 0x20, 0x21, 0x27, 0xb0, 0x88, 0x90, 0x06,
+	0x17, 0x6b, 0x5a, 0x66, 0x4e, 0x6a, 0xb1, 0x04, 0xb3, 0x02, 0xb3, 0x06, 0xb7, 0x91, 0x90, 0x1e,
+	0xd4, 0x40, 0x88, 0xb4, 0x5b, 0x66, 0x4e, 0x6a, 0x10, 0x44, 0x81, 0xd2, 0x46, 0x46, 0x2e, 0x2e,
+	0x84, 0xa8, 0x90, 0x10, 0x17, 0x4b, 0x41, 0x62, 0x49, 0x86, 0x04, 0xa3, 0x02, 0xa3, 0x06, 0x67,
+	0x10, 0x98, 0x2d, 0x24, 0xcd, 0xc5, 0x99, 0x92, 0x58, 0x92, 0x1a, 0x5f, 0x9c, 0x9a, 0x9a, 0x07,
+	0xb5, 0x8b, 0x03, 0x24, 0x10, 0x9c, 0x9a, 0x9a, 0x27, 0x64, 0xc2, 0xc5, 0x5a, 0x5c, 0x92, 0x58,
+	0x92, 0x2a, 0xc1, 0xac, 0xc0, 0xa8, 0xc1, 0x67, 0x24, 0x87, 0x69, 0x13, 0x94, 0x19, 0x0c, 0x52,
+	0x15, 0x04, 0x51, 0xac, 0x64, 0xc3, 0xc5, 0x8d, 0x24, 0x2a, 0xc4, 0xcd, 0xc5, 0x1e, 0xea, 0xe7,
+	0xed, 0xe7, 0x1f, 0xee, 0x27, 0xc0, 0x20, 0x24, 0xc8, 0xc5, 0xeb, 0xe7, 0x1f, 0x12, 0xef, 0xe4,
+	0xe8, 0xec, 0xed, 0xea, 0x12, 0x1f, 0x1a, 0x20, 0xc0, 0x28, 0xc4, 0xcb, 0xc5, 0x89, 0xe0, 0x32,
+	0x25, 0xb1, 0x81, 0xc3, 0xc5, 0x18, 0x10, 0x00, 0x00, 0xff, 0xff, 0x2a, 0x7b, 0xed, 0xb4, 0x27,
+	0x01, 0x00, 0x00,
 }
