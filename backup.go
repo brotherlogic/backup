@@ -59,6 +59,7 @@ func (s *Server) GetState() []*pbg.State {
 }
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
+	defer s.Log(fmt.Sprintf("Now there's %v files", len(s.config.GetFiles())))
 	return time.Now().Add(time.Hour * 24), filepath.Walk("/home/media/raid1/", s.processFile)
 }
 

@@ -19,4 +19,14 @@ func TestSpecRead(t *testing.T) {
 	if err != nil {
 		t.Errorf("Bad pull: %v", err)
 	}
+
+	err = s.processFile("path", fi, fmt.Errorf("What"))
+	if err != nil {
+		t.Errorf("Bad pull: %v", err)
+	}
+
+	if len(s.config.GetFiles()) != 1 {
+		t.Errorf("Too many files added")
+	}
+
 }
