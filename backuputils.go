@@ -8,6 +8,7 @@ import (
 )
 
 func (s *Server) processFile(path string, info os.FileInfo, err error) error {
+	s.seen[path] = true
 
 	found := false
 	for _, file := range s.config.GetFiles() {

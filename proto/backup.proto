@@ -16,6 +16,7 @@ message BackupFile {
     UNKNOWN = 0;
     NOT_BACKED_UP = 1;
     BACKED_UP = 2;
+    MISSING = 3;
   }
 
   BackupState state = 3;
