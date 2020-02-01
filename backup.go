@@ -20,6 +20,7 @@ import (
 type Server struct {
 	*goserver.GoServer
 	config *pb.Config
+	seen   map[string]bool
 }
 
 // Init builds the server
@@ -60,7 +61,17 @@ func (s *Server) GetState() []*pbg.State {
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	defer s.Log(fmt.Sprintf("Now there's %v files", len(s.config.GetFiles())))
-	return time.Now().Add(time.Hour * 24), filepath.Walk("/home/media/raid1/", s.processFile)
+	s.seen = make(map[string]bool)
+	t, err := time.Now().Add(time.Hour*24), filepath.Walk("/home/media/raid1/", s.processFile)
+
+	// Set other files missing
+	for _, f := range s.config.Files {
+		if !s.seen[f.GetPath()] {
+			f.State = pb.BackupFile_MISSING
+		}
+	}
+
+	return t, err
 }
 
 func main() {

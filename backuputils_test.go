@@ -9,6 +9,7 @@ import (
 func InitTestServer() *Server {
 	s := Init()
 	s.SkipLog = true
+	s.seen = make(map[string]bool)
 	return s
 }
 
