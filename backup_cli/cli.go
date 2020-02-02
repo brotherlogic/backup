@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -45,6 +46,14 @@ func main() {
 			if err != nil {
 				log.Fatalf("Save error: %v", err)
 			}
+		}
+	case "stats":
+		res, err := client.GetStats(ctx, &pb.StatsRequest{})
+		if err != nil {
+			log.Fatalf("Save error: %v", err)
+		}
+		for _, stat := range res.GetStats() {
+			fmt.Printf("%v - %v\n", stat.GetCount(), stat.GetState())
 		}
 	}
 
