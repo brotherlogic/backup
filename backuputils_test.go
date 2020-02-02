@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"testing"
+
+	pb "github.com/brotherlogic/backup/proto"
 )
 
 func InitTestServer() *Server {
@@ -30,4 +32,24 @@ func TestSpecRead(t *testing.T) {
 		t.Errorf("Too many files added")
 	}
 
+}
+
+func TestMatch(t *testing.T) {
+	s := InitTestServer()
+	s.config.Files = append(s.config.Files, &pb.BackupFile{Path: "madeup"})
+
+	err := s.processCloudFile("madeup")
+	if err != nil {
+		t.Errorf("bad proc: %v", err)
+	}
+}
+
+func TestNoMatch(t *testing.T) {
+	s := InitTestServer()
+	s.config.Files = append(s.config.Files, &pb.BackupFile{Path: "madeup"})
+
+	err := s.processCloudFile("madeup2")
+	if err != nil {
+		t.Errorf("bad proc: %v", err)
+	}
 }
