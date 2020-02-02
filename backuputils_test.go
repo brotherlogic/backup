@@ -5,6 +5,8 @@ import (
 	"os"
 	"testing"
 
+	"github.com/brotherlogic/keystore/client"
+
 	pb "github.com/brotherlogic/backup/proto"
 )
 
@@ -12,6 +14,7 @@ func InitTestServer() *Server {
 	s := Init()
 	s.SkipLog = true
 	s.seen = make(map[string]bool)
+	s.GoServer.KSclient = *keystoreclient.GetTestClient(".test")
 	return s
 }
 
