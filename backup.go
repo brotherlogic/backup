@@ -143,7 +143,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 		s.processCloudFile(attrs.Name)
 	}
 
-	return time.Now().Add(time.Hour * 12), nil
+	return time.Now().Add(time.Hour * 12), s.KSclient.Save(ctx, CONFIG, s.config)
 }
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
@@ -163,6 +163,9 @@ func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 
 	s.Log(fmt.Sprintf("Now there's %v files (but %v)", len(s.config.GetFiles()), err))
 
+	if err != nil {
+		s.KSclient.Save(ctx, CONFIG, s.config)
+	}
 	return t, err
 }
 
