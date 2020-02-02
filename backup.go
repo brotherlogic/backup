@@ -60,7 +60,6 @@ func (s *Server) GetState() []*pbg.State {
 }
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
-	defer s.Log(fmt.Sprintf("Now there's %v files", len(s.config.GetFiles())))
 	s.seen = make(map[string]bool)
 	t, err := time.Now().Add(time.Minute*5), filepath.Walk("/home/media/raid1/", s.processFile)
 
@@ -70,6 +69,8 @@ func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 			f.State = pb.BackupFile_MISSING
 		}
 	}
+
+	s.Log(fmt.Sprintf("Now there's %v files (but %v)", len(s.config.GetFiles()), err))
 
 	return t, err
 }
