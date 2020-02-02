@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"time"
 
@@ -19,7 +18,7 @@ func (s *Server) processFile(path string, info os.FileInfo, err error) error {
 	}
 
 	if !found {
-		s.config.Files = append(s.config.Files, &pb.BackupFile{Path: path, DateSeen: time.Now().Unix()})
+		s.config.Files = append(s.config.Files, &pb.BackupFile{Path: path, DateSeen: time.Now().Unix(), State: pb.BackupFile_NOT_BACKED_UP})
 	}
 
 	return nil
@@ -28,11 +27,10 @@ func (s *Server) processFile(path string, info os.FileInfo, err error) error {
 func (s *Server) processCloudFile(path string) error {
 	for _, file := range s.config.GetFiles() {
 		if file.GetPath() == "/media/raid1/"+path {
-			s.Log(fmt.Sprintf("Found match %v and %v", file, path))
+			file.State = pb.BackupFile_BACKED_UP
 			return nil
 		}
 	}
 
-	s.Log(fmt.Sprintf("No match found for %v", path))
 	return nil
 }
