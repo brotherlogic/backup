@@ -27,7 +27,7 @@ func (s *Server) processFile(path string, info os.FileInfo, err error) error {
 
 func (s *Server) processCloudFile(path string) error {
 	for _, file := range s.config.GetFiles() {
-		if file.GetPath() == path {
+		if file.GetPath() == "/media/raid1/"+path {
 			s.Log(fmt.Sprintf("Found match %v and %v", file, path))
 			return nil
 		}
