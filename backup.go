@@ -119,12 +119,12 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 		s.processCloudFile(attrs.Name)
 	}
 
-	return time.Now().Add(time.Minute * 5), nil
+	return time.Now().Add(time.Hour * 12), nil
 }
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	s.seen = make(map[string]bool)
-	t, err := time.Now().Add(time.Minute*5), filepath.Walk("/media/raid1/", s.processFile)
+	t, err := time.Now().Add(time.Hour*12), filepath.Walk("/media/raid1/", s.processFile)
 
 	// Set other files missing
 	for _, f := range s.config.Files {
