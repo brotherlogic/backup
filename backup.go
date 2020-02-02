@@ -23,6 +23,9 @@ import (
 const (
 	//TOKEN - the json auth token
 	TOKEN = "/github.com/brotherlogic/backup/jsontoken"
+
+	//CONFIG - the overall state
+	CONFIG = "/github.com/brotherlogic/backup/config"
 )
 
 //Server main server type
@@ -59,6 +62,23 @@ func (s *Server) loadToken(ctx context.Context) error {
 	return nil
 }
 
+func (s *Server) loadConfig(ctx context.Context) error {
+	config := &pb.Config{}
+	data, _, err := s.KSclient.Read(ctx, CONFIG, config)
+
+	if err != nil {
+		return err
+	}
+
+	config, ok := data.(*pb.Config)
+	if !ok {
+		return fmt.Errorf("Unable to unwrap config: %v", err)
+	}
+	s.config = config
+
+	return nil
+}
+
 // DoRegister does RPC registration
 func (s *Server) DoRegister(server *grpc.Server) {
 	pb.RegisterBackupServiceServer(server, s)
@@ -76,7 +96,7 @@ func (s *Server) Shutdown(ctx context.Context) error {
 
 // Mote promotes/demotes this server
 func (s *Server) Mote(ctx context.Context, master bool) error {
-	return nil
+	return s.loadConfig(ctx)
 }
 
 // GetState gets the state of the server
@@ -88,6 +108,10 @@ func (s *Server) GetState() []*pbg.State {
 
 func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 	err := s.loadToken(ctx)
+	if err != nil {
+		return time.Now().Add(time.Minute * 5), err
+	}
+	err = s.loadConfig(ctx)
 	if err != nil {
 		return time.Now().Add(time.Minute * 5), err
 	}
@@ -123,6 +147,10 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 }
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
+	err := s.loadConfig(ctx)
+	if err != nil {
+		return time.Now().Add(time.Minute * 5), err
+	}
 	s.seen = make(map[string]bool)
 	t, err := time.Now().Add(time.Hour*12), filepath.Walk("/media/raid1/", s.processFile)
 

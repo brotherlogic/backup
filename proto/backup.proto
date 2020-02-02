@@ -32,6 +32,18 @@ message TokenRequest {
 
 message TokenResponse {}
 
+message StatsRequest{}
+
+message StatsResponse {
+  repeated Stat stats = 1;
+}
+
+message Stat {
+  BackupFile.BackupState state = 1;
+  int32 count = 2;
+}
+
 service BackupService {
   rpc SaveToken(TokenRequest) returns (TokenResponse) {};
+  rpc GetStats(StatsRequest) returns (StatsResponse) {};
 }
