@@ -15,6 +15,8 @@ import (
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	pb "github.com/brotherlogic/backup/proto"
 	pbg "github.com/brotherlogic/goserver/proto"
@@ -96,7 +98,11 @@ func (s *Server) Shutdown(ctx context.Context) error {
 
 // Mote promotes/demotes this server
 func (s *Server) Mote(ctx context.Context, master bool) error {
-	return s.loadConfig(ctx)
+	err := s.loadConfig(ctx)
+	if status.Convert(err).Code() == codes.NotFound {
+		s.KSclient.Save(ctx, CONFIG, s.config)
+	}
+	return err
 }
 
 // GetState gets the state of the server
