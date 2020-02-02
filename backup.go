@@ -61,7 +61,7 @@ func (s *Server) loadToken(ctx context.Context) error {
 
 // DoRegister does RPC registration
 func (s *Server) DoRegister(server *grpc.Server) {
-
+	pb.RegisterBackupServiceServer(server, s)
 }
 
 // ReportHealth alerts if we're not healthy

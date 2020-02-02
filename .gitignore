@@ -1,3 +1,4 @@
 backup
 *~
 .test
+backup_cli/backup_cli
