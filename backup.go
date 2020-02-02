@@ -61,7 +61,7 @@ func (s *Server) GetState() []*pbg.State {
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	s.seen = make(map[string]bool)
-	t, err := time.Now().Add(time.Minute*5), filepath.Walk("/home/media/raid1/", s.processFile)
+	t, err := time.Now().Add(time.Minute*5), filepath.Walk("/media/raid1/", s.processFile)
 
 	// Set other files missing
 	for _, f := range s.config.Files {
