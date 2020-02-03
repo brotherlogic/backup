@@ -100,7 +100,7 @@ func (s *Server) Shutdown(ctx context.Context) error {
 func (s *Server) Mote(ctx context.Context, master bool) error {
 	err := s.loadConfig(ctx)
 	if status.Convert(err).Code() == codes.NotFound {
-		s.KSclient.Save(ctx, CONFIG, s.config)
+		err = s.KSclient.Save(ctx, CONFIG, s.config)
 	}
 	return err
 }
