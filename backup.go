@@ -168,11 +168,12 @@ func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 		}
 	}
 
-	s.Log(fmt.Sprintf("Now there's %v files (but %v)", len(s.config.GetFiles()), err))
-
 	if err != nil {
 		s.KSclient.Save(ctx, CONFIG, s.config)
 	}
+
+	s.Log(fmt.Sprintf("Now there's %v files (but %v)", len(s.config.GetFiles()), err))
+
 	return t, err
 }
 
