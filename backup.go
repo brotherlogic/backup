@@ -137,6 +137,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 
 	query := &storage.Query{Prefix: ""}
 	it := bkt.Objects(ctx, query)
+	count := 0
 	for {
 		attrs, err := it.Next()
 		if err == iterator.Done {
@@ -148,7 +149,10 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 		}
 
 		s.processCloudFile(attrs.Name)
+		count++
 	}
+
+	s.Log(fmt.Sprintf("Processed %v cloud files", count))
 
 	return time.Now().Add(time.Hour * 12), s.KSclient.Save(ctx, CONFIG, s.config)
 }
