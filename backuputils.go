@@ -7,7 +7,8 @@ import (
 	pb "github.com/brotherlogic/backup/proto"
 )
 
-func (s *Server) processFile(path string, info os.FileInfo, err error) error {
+func (s *Server) processFile(cpath string, info os.FileInfo, err error) error {
+	path := hashPath(cpath)
 	s.seen[path] = true
 
 	found := false
@@ -24,9 +25,10 @@ func (s *Server) processFile(path string, info os.FileInfo, err error) error {
 	return nil
 }
 
-func (s *Server) processCloudFile(path string) error {
+func (s *Server) processCloudFile(cpath string) error {
+	path := hashPath("/media/raid1/" + cpath)
 	for _, file := range s.config.GetFiles() {
-		if file.GetPath() == "/media/raid1/"+path {
+		if file.GetPath() == path {
 			file.State = pb.BackupFile_BACKED_UP
 			return nil
 		}

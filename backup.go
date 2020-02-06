@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha1"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -37,6 +38,13 @@ type Server struct {
 	config *pb.Config
 	token  *pb.Token
 	seen   map[string]bool
+}
+
+func hashPath(path string) string {
+	h := sha1.New()
+	h.Write([]byte(path))
+	bs := h.Sum(nil)
+	return fmt.Sprintf("%v", bs)
 }
 
 // Init builds the server
@@ -78,6 +86,13 @@ func (s *Server) loadConfig(ctx context.Context) error {
 		return fmt.Errorf("Unable to unwrap config: %v", err)
 	}
 	s.config = config
+
+	if !s.config.GetUsesHashes() {
+		for _, f := range s.config.GetFiles() {
+			f.Path = hashPath(f.Path)
+		}
+		s.config.UsesHashes = true
+	}
 
 	return nil
 }

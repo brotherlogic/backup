@@ -9,7 +9,7 @@ message Token {
 message Config {
   int64 last_backup = 2;
   repeated BackupFile files = 3;
-  
+  bool uses_hashes = 4;
 }
 
 message BackupFile {
