@@ -124,8 +124,13 @@ func (s *Server) Mote(ctx context.Context, master bool) error {
 
 // GetState gets the state of the server
 func (s *Server) GetState() []*pbg.State {
+	rep := ""
+	if len(s.config.GetFiles()) > 0 {
+		rep = fmt.Sprintf("%v", s.config.GetFiles()[0])
+	}
 	return []*pbg.State{
 		&pbg.State{Key: "config_size", Value: int64(proto.Size(s.config))},
+		&pbg.State{Key: "sample", Text: rep},
 		&pbg.State{Key: "last_sync", TimeValue: s.config.GetLastBackup()},
 	}
 }
