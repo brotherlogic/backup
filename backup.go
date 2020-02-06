@@ -10,6 +10,7 @@ import (
 
 	"cloud.google.com/go/storage"
 	"github.com/brotherlogic/goserver"
+	"github.com/golang/protobuf/proto"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/iterator"
@@ -109,6 +110,7 @@ func (s *Server) Mote(ctx context.Context, master bool) error {
 // GetState gets the state of the server
 func (s *Server) GetState() []*pbg.State {
 	return []*pbg.State{
+		&pbg.State{Key: "config_size", Value: int64(proto.Size(s.config))},
 		&pbg.State{Key: "last_sync", TimeValue: s.config.GetLastBackup()},
 	}
 }
@@ -152,7 +154,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 		count++
 	}
 
-	s.Log(fmt.Sprintf("Processed %v cloud files", count))
+	s.Log(fmt.Sprintf("Processed %v cloud files (%v)", count, err))
 
 	return time.Now().Add(time.Hour * 12), s.KSclient.Save(ctx, CONFIG, s.config)
 }
