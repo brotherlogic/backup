@@ -44,7 +44,7 @@ func hashPath(path string) string {
 	h := sha1.New()
 	h.Write([]byte(path))
 	bs := h.Sum(nil)
-	return fmt.Sprintf("%v", bs)
+	return fmt.Sprintf("%s", bs)
 }
 
 // Init builds the server
@@ -87,12 +87,7 @@ func (s *Server) loadConfig(ctx context.Context) error {
 	}
 	s.config = config
 
-	if !s.config.GetUsesHashes() {
-		for _, f := range s.config.GetFiles() {
-			f.Path = hashPath(f.Path)
-		}
-		s.config.UsesHashes = true
-	}
+	s.config.Files = []*pb.BackupFile{}
 
 	return nil
 }
