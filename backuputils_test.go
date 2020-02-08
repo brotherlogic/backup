@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"testing"
 
 	"github.com/brotherlogic/keystore/client"
+	"github.com/golang/protobuf/proto"
 
 	pb "github.com/brotherlogic/backup/proto"
 )
@@ -45,6 +47,10 @@ func TestMatch(t *testing.T) {
 	if err != nil {
 		t.Errorf("bad proc: %v", err)
 	}
+
+	log.Printf("CONFIG %v", s.config)
+	log.Printf("strlen -> %v", len(s.config.Files[0].Path))
+	log.Printf("Size %v", proto.Size(s.config.Files[0]))
 }
 
 func TestNoMatch(t *testing.T) {

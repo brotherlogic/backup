@@ -1,9 +1,9 @@
 package main
 
 import (
-	"crypto/sha1"
 	"flag"
 	"fmt"
+	"hash/fnv"
 	"io/ioutil"
 	"log"
 	"path/filepath"
@@ -41,7 +41,7 @@ type Server struct {
 }
 
 func hashPath(path string) string {
-	h := sha1.New()
+	h := fnv.New64a()
 	h.Write([]byte(path))
 	bs := h.Sum(nil)
 	return string(bs)
