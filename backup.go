@@ -87,8 +87,6 @@ func (s *Server) loadConfig(ctx context.Context) error {
 	}
 	s.config = config
 
-	s.config.Files = []*pb.BackupFile{}
-
 	return nil
 }
 
