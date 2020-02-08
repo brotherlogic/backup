@@ -1,9 +1,9 @@
 package main
 
 import (
-	"crypto/sha1"
 	"flag"
 	"fmt"
+	"hash/fnv"
 	"io/ioutil"
 	"log"
 	"path/filepath"
@@ -41,10 +41,10 @@ type Server struct {
 }
 
 func hashPath(path string) string {
-	h := sha1.New()
+	h := fnv.New64a()
 	h.Write([]byte(path))
 	bs := h.Sum(nil)
-	return fmt.Sprintf("%s", bs)
+	return string(bs)
 }
 
 // Init builds the server
@@ -86,6 +86,8 @@ func (s *Server) loadConfig(ctx context.Context) error {
 		return fmt.Errorf("Unable to unwrap config: %v", err)
 	}
 	s.config = config
+
+	s.config.Files = []*pb.BackupFile{}
 
 	return nil
 }
