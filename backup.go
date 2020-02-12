@@ -30,6 +30,9 @@ const (
 
 	//CONFIG - the overall state
 	CONFIG = "/github.com/brotherlogic/backup/config"
+
+	//WAITTIME - time between runs
+	WAITTIME = time.Minute * 5
 )
 
 //Server main server type
@@ -169,7 +172,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 
 	s.Log(fmt.Sprintf("Processed %v cloud files (%v)", count, err))
 
-	return time.Now().Add(time.Hour * 12), s.KSclient.Save(ctx, CONFIG, s.config)
+	return time.Now().Add(WAITTIME), s.KSclient.Save(ctx, CONFIG, s.config)
 }
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
@@ -178,7 +181,7 @@ func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 		return time.Now().Add(time.Minute * 5), err
 	}
 	s.seen = make(map[string]bool)
-	t, err := time.Now().Add(time.Hour*12), filepath.Walk("/media/raid1/", s.processFile)
+	t, err := time.Now().Add(WAITTIME), filepath.Walk("/media/raid1/", s.processFile)
 
 	// Set other files missing
 	for _, f := range s.config.Files {
