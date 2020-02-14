@@ -8,6 +8,7 @@ import (
 
 	"github.com/brotherlogic/keystore/client"
 	"github.com/golang/protobuf/proto"
+	"golang.org/x/net/context"
 
 	pb "github.com/brotherlogic/backup/proto"
 )
@@ -41,9 +42,9 @@ func TestSpecRead(t *testing.T) {
 
 func TestMatch(t *testing.T) {
 	s := InitTestServer()
-	s.config.Files = append(s.config.Files, &pb.BackupFile{Path: hashPath("/media/raid1/madeup")})
+	s.config.Files = append(s.config.Files, &pb.BackupFile{Path: s.hashPath(context.Background(), "/media/raid1/madeup")})
 
-	err := s.processCloudFile("madeup")
+	err := s.processCloudFile(context.Background(), "madeup")
 	if err != nil {
 		t.Errorf("bad proc: %v", err)
 	}
@@ -57,7 +58,7 @@ func TestNoMatch(t *testing.T) {
 	s := InitTestServer()
 	s.config.Files = append(s.config.Files, &pb.BackupFile{Path: "madeup"})
 
-	err := s.processCloudFile("madeup2")
+	err := s.processCloudFile(context.Background(), "madeup2")
 	if err != nil {
 		t.Errorf("bad proc: %v", err)
 	}

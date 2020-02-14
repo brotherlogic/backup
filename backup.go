@@ -38,16 +38,26 @@ const (
 //Server main server type
 type Server struct {
 	*goserver.GoServer
-	config *pb.Config
-	token  *pb.Token
-	seen   map[string]bool
+	config  *pb.Config
+	token   *pb.Token
+	seen    map[string]bool
+	hashMap map[string]string
 }
 
-func hashPath(path string) string {
+func (s *Server) hashPath(ctx context.Context, path string) string {
 	h := fnv.New64a()
 	h.Write([]byte(path))
 	bs := h.Sum(nil)
-	return string(bs)
+	hash := string(bs)
+
+	if val, ok := s.hashMap[path]; !ok {
+		s.hashMap[path] = hash
+	} else {
+		if val != path {
+			s.RaiseIssue(ctx, "Hash Clash", fmt.Sprintf("%v and %v have clashed", val, path), false)
+		}
+	}
+	return hash
 }
 
 // Init builds the server
@@ -55,6 +65,7 @@ func Init() *Server {
 	s := &Server{
 		GoServer: &goserver.GoServer{},
 		config:   &pb.Config{},
+		hashMap:  make(map[string]string),
 	}
 	return s
 }
@@ -166,7 +177,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 			return time.Now().Add(time.Minute * 5), err
 		}
 
-		s.processCloudFile(attrs.Name)
+		s.processCloudFile(ctx, attrs.Name)
 		count++
 	}
 
@@ -177,6 +188,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	err := s.loadConfig(ctx)
+	s.hashMap = make(map[string]string)
 	if err != nil {
 		return time.Now().Add(time.Minute * 5), err
 	}
