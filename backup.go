@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"path/filepath"
+	"sync"
 	"time"
 
 	"cloud.google.com/go/storage"
@@ -38,10 +39,11 @@ const (
 //Server main server type
 type Server struct {
 	*goserver.GoServer
-	config  *pb.Config
-	token   *pb.Token
-	seen    map[string]bool
-	hashMap map[string]string
+	config    *pb.Config
+	token     *pb.Token
+	seen      map[string]bool
+	hashMutex *sync.Mutex
+	hashMap   map[string]string
 }
 
 func (s *Server) hashPath(ctx context.Context, path string) string {
@@ -50,6 +52,8 @@ func (s *Server) hashPath(ctx context.Context, path string) string {
 	bs := h.Sum(nil)
 	hash := string(bs)
 
+	s.hashMutex.Lock()
+	defer s.hashMutex.Unlock()
 	if val, ok := s.hashMap[path]; !ok {
 		s.hashMap[path] = hash
 	} else {
@@ -63,9 +67,10 @@ func (s *Server) hashPath(ctx context.Context, path string) string {
 // Init builds the server
 func Init() *Server {
 	s := &Server{
-		GoServer: &goserver.GoServer{},
-		config:   &pb.Config{},
-		hashMap:  make(map[string]string),
+		GoServer:  &goserver.GoServer{},
+		config:    &pb.Config{},
+		hashMap:   make(map[string]string),
+		hashMutex: &sync.Mutex{},
 	}
 	return s
 }
@@ -188,7 +193,9 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	err := s.loadConfig(ctx)
+	s.hashMutex.Lock()
 	s.hashMap = make(map[string]string)
+	s.hashMutex.Unlock()
 	if err != nil {
 		return time.Now().Add(time.Minute * 5), err
 	}
