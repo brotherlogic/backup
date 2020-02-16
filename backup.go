@@ -238,6 +238,7 @@ func main() {
 
 	server.RegisterLockingTask(server.fsWalk, "fs_walk")
 	server.RegisterLockingTask(server.gcWalk, "gc_walk")
+	server.RegisterLockingTask(server.alertOnMismatch, "alert_on_mismatch")
 
 	fmt.Printf("%v", server.Serve())
 }

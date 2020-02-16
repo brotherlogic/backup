@@ -63,3 +63,16 @@ func TestNoMatch(t *testing.T) {
 		t.Errorf("bad proc: %v", err)
 	}
 }
+
+func TestAlertOnMismatch(t *testing.T) {
+	s := InitTestServer()
+	val, err := s.alertOnMismatch(context.Background())
+	if err != nil {
+		t.Errorf("Alerting caused an error: %v -> %v", err, val)
+	}
+}
+
+func TestAlertOnSstats(t *testing.T) {
+	s := InitTestServer()
+	s.alertOnBadStats(context.Background(), []*pb.Stat{&pb.Stat{State: pb.BackupFile_NOT_BACKED_UP}})
+}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -39,4 +40,18 @@ func (s *Server) processCloudFile(ctx context.Context, cpath string) error {
 	}
 
 	return nil
+}
+
+func (s *Server) alertOnMismatch(ctx context.Context) (time.Time, error) {
+	stats, _ := s.GetStats(ctx, &pb.StatsRequest{})
+	s.alertOnBadStats(ctx, stats.GetStats())
+	return time.Now().Add(time.Hour * 24), nil
+}
+
+func (s *Server) alertOnBadStats(ctx context.Context, stats []*pb.Stat) {
+	for _, stat := range stats {
+		if stat.GetState() == pb.BackupFile_NOT_BACKED_UP {
+			s.RaiseIssue(ctx, "Backup Issue", fmt.Sprintf("Some files are noot backed up"), false)
+		}
+	}
 }
