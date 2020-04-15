@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package backup;
 
+option go_package = ".;backup";
+
 message Token {
   bytes json_token = 1;
 }
