@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package backup;
 
-option go_package = ".;backup";
+option go_package = "github.com/brotherlogic/backup/proto";
 
 message Token {
   bytes json_token = 1;
