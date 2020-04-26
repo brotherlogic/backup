@@ -213,7 +213,7 @@ func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 		err = s.KSclient.Save(ctx, CONFIG, s.config)
 	}
 
-	s.Log(fmt.Sprintf("Now there's %v files (but %v) -> %v => %v", len(s.config.GetFiles()), err, proto.Size(s.config), s.config))
+	s.Log(fmt.Sprintf("Now there's %v files (but %v) -> %v => %v, %v", len(s.config.GetFiles()), err, proto.Size(s.config), s.config, s.config.GetFiles()[0]))
 
 	return t, err
 }
