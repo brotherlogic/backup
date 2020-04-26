@@ -9,7 +9,7 @@ import (
 
 func TestSaveToken(t *testing.T) {
 	s := InitTestServer()
-	_, err := s.SaveToken(context.Background(), &pb.TokenRequest{})
+	_, err := s.SaveToken(context.Background(), &pb.TokenRequest{Token: &pb.Token{JsonToken: []byte("hello")}})
 	if err != nil {
 		t.Errorf("Bad token save: %v", err)
 	}

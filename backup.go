@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
@@ -43,7 +44,43 @@ type Server struct {
 	token     *pb.Token
 	seen      map[string]bool
 	hashMutex *sync.Mutex
-	hashMap   map[string]string
+	hashMap   map[int64]string
+}
+
+func (s *Server) intHashPath(ctx context.Context, path string) (int64, int64) {
+	slashIndex := strings.LastIndex(path, "/")
+	if slashIndex == -1 {
+		slashIndex = 0
+	}
+
+	h := fnv.New64a()
+	h.Write([]byte(path[:slashIndex]))
+	pSum := int64(h.Sum64())
+
+	h2 := fnv.New64a()
+	h2.Write([]byte(path[slashIndex+1:]))
+	fSum := int64(h2.Sum64())
+
+	s.hashMutex.Lock()
+	defer s.hashMutex.Unlock()
+
+	if val, ok := s.hashMap[pSum]; !ok {
+		s.hashMap[pSum] = path[:slashIndex]
+	} else {
+		if path[:slashIndex] != val {
+			s.RaiseIssue(ctx, "Hash Clash", fmt.Sprintf("%v and %v have clashed", val, path[:slashIndex]), false)
+		}
+	}
+
+	if val, ok := s.hashMap[fSum]; !ok {
+		s.hashMap[fSum] = path[slashIndex+1:]
+	} else {
+		if path[slashIndex+1:] != val {
+			s.RaiseIssue(ctx, "Hash Clash", fmt.Sprintf("%v and %v have clashed", val, path[slashIndex+1:]), false)
+		}
+	}
+
+	return pSum, fSum
 }
 
 func (s *Server) hashPath(ctx context.Context, path string) string {
@@ -52,15 +89,6 @@ func (s *Server) hashPath(ctx context.Context, path string) string {
 	bs := h.Sum(nil)
 	hash := string(bs)
 
-	s.hashMutex.Lock()
-	defer s.hashMutex.Unlock()
-	if val, ok := s.hashMap[path]; !ok {
-		s.hashMap[path] = hash
-	} else {
-		if val != path {
-			s.RaiseIssue(ctx, "Hash Clash", fmt.Sprintf("%v and %v have clashed", val, path), false)
-		}
-	}
 	return hash
 }
 
@@ -69,7 +97,7 @@ func Init() *Server {
 	s := &Server{
 		GoServer:  &goserver.GoServer{},
 		config:    &pb.Config{},
-		hashMap:   make(map[string]string),
+		hashMap:   make(map[int64]string),
 		hashMutex: &sync.Mutex{},
 	}
 	return s
@@ -105,6 +133,16 @@ func (s *Server) loadConfig(ctx context.Context) error {
 		return fmt.Errorf("Unable to unwrap config: %v", err)
 	}
 	s.config = config
+
+	// Trim any files with a file path
+	nFiles := make([]*pb.BackupFile, 0)
+	for _, f := range s.config.GetFiles() {
+		if len(f.Path) == 0 {
+			nFiles = append(nFiles, f)
+		}
+	}
+
+	s.config.Files = nFiles
 
 	return nil
 }
@@ -194,7 +232,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	err := s.loadConfig(ctx)
 	s.hashMutex.Lock()
-	s.hashMap = make(map[string]string)
+	s.hashMap = make(map[int64]string)
 	s.hashMutex.Unlock()
 	if err != nil {
 		return time.Now().Add(time.Minute * 5), err
