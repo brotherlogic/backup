@@ -42,7 +42,8 @@ func TestSpecRead(t *testing.T) {
 
 func TestMatch(t *testing.T) {
 	s := InitTestServer()
-	s.config.Files = append(s.config.Files, &pb.BackupFile{Path: s.hashPath(context.Background(), "/media/raid1/madeup")})
+	pNum, fNum := s.intHashPath(context.Background(), "/media/raid1/madeup")
+	s.config.Files = append(s.config.Files, &pb.BackupFile{FilenameHash: fNum, DirectoryHash: pNum})
 
 	err := s.processCloudFile(context.Background(), "madeup")
 	if err != nil {

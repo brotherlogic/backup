@@ -13,27 +13,27 @@ import (
 func (s *Server) processFile(cpath string, info os.FileInfo, err error) error {
 	ctx, cancel := utils.ManualContext("process-file", "process-file", time.Minute)
 	defer cancel()
-	path := s.hashPath(ctx, cpath)
-	s.seen[path] = true
+	pNum, fNum := s.intHashPath(ctx, cpath)
+	//s.seen[path] = true
 
 	found := false
 	for _, file := range s.config.GetFiles() {
-		if file.GetPath() == path {
+		if file.GetDirectoryHash() == pNum && file.GetFilenameHash() == fNum {
 			found = true
 		}
 	}
 
 	if !found {
-		s.config.Files = append(s.config.Files, &pb.BackupFile{Path: path, DateSeen: time.Now().Unix(), State: pb.BackupFile_NOT_BACKED_UP})
+		s.config.Files = append(s.config.Files, &pb.BackupFile{DirectoryHash: pNum, FilenameHash: fNum, DateSeen: time.Now().Unix(), State: pb.BackupFile_NOT_BACKED_UP})
 	}
 
 	return nil
 }
 
 func (s *Server) processCloudFile(ctx context.Context, cpath string) error {
-	path := s.hashPath(ctx, "/media/raid1/"+cpath)
+	pNum, fNum := s.intHashPath(ctx, "/media/raid1/"+cpath)
 	for _, file := range s.config.GetFiles() {
-		if file.GetPath() == path {
+		if file.GetDirectoryHash() == pNum && file.GetFilenameHash() == fNum {
 			file.State = pb.BackupFile_BACKED_UP
 			return nil
 		}
