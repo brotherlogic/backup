@@ -186,7 +186,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 		count++
 	}
 
-	s.Log(fmt.Sprintf("Processed %v cloud files (%v)", count, err))
+	s.Log(fmt.Sprintf("Processed %v cloud files (%v) -> %v", count, err, s.config))
 
 	return time.Now().Add(WAITTIME), s.KSclient.Save(ctx, CONFIG, s.config)
 }
