@@ -24,7 +24,7 @@ func (s *Server) processFile(cpath string, info os.FileInfo, err error) error {
 	}
 
 	if !found {
-		s.config.Files = append(s.config.Files, &pb.BackupFile{DirectoryHash: pNum, FilenameHash: fNum, DateSeen: time.Now().Unix(), State: pb.BackupFile_NOT_BACKED_UP})
+		s.config.Files = append(s.config.Files, &pb.BackupFile{DirectoryHash: pNum, FilenameHash: fNum, DateSeen: int32(time.Now().Unix()), State: pb.BackupFile_NOT_BACKED_UP})
 	}
 
 	return nil

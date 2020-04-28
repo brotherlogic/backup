@@ -16,7 +16,7 @@ message Config {
 
 message BackupFile {
   string path = 1; // DEPRECATED
-  int64 date_seen = 2;
+  int32 date_seen = 2;
 
   enum BackupState {
     UNKNOWN = 0;
@@ -26,8 +26,8 @@ message BackupFile {
   }
 
   BackupState state = 3;
-  int64 directory_hash = 4;
-  int64 filename_hash = 5;
+  int32 directory_hash = 4;
+  int32 filename_hash = 5;
 }
 
 message TokenRequest {
