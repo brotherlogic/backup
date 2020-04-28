@@ -44,22 +44,22 @@ type Server struct {
 	token     *pb.Token
 	seen      map[string]bool
 	hashMutex *sync.Mutex
-	hashMap   map[int64]string
+	hashMap   map[int32]string
 }
 
-func (s *Server) intHashPath(ctx context.Context, path string) (int64, int64) {
+func (s *Server) intHashPath(ctx context.Context, path string) (int32, int32) {
 	slashIndex := strings.LastIndex(path, "/")
 	if slashIndex == -1 {
 		slashIndex = 0
 	}
 
-	h := fnv.New64a()
+	h := fnv.New32a()
 	h.Write([]byte(path[:slashIndex]))
-	pSum := int64(h.Sum64())
+	pSum := int32(h.Sum32())
 
-	h2 := fnv.New64a()
+	h2 := fnv.New32a()
 	h2.Write([]byte(path[slashIndex+1:]))
-	fSum := int64(h2.Sum64())
+	fSum := int32(h2.Sum32())
 
 	s.hashMutex.Lock()
 	defer s.hashMutex.Unlock()
@@ -97,7 +97,7 @@ func Init() *Server {
 	s := &Server{
 		GoServer:  &goserver.GoServer{},
 		config:    &pb.Config{},
-		hashMap:   make(map[int64]string),
+		hashMap:   make(map[int32]string),
 		hashMutex: &sync.Mutex{},
 	}
 	return s
@@ -246,7 +246,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	err := s.loadConfig(ctx)
 	s.hashMutex.Lock()
-	s.hashMap = make(map[int64]string)
+	s.hashMap = make(map[int32]string)
 	s.hashMutex.Unlock()
 	if err != nil {
 		return time.Now().Add(time.Minute * 5), err
