@@ -15,7 +15,6 @@ message Config {
 }
 
 message BackupFile {
-  string path = 1; // DEPRECATED
   int32 date_seen = 2;
 
   enum BackupState {

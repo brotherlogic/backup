@@ -51,13 +51,12 @@ func TestMatch(t *testing.T) {
 	}
 
 	log.Printf("CONFIG %v", s.config)
-	log.Printf("strlen -> %v", len(s.config.Files[0].Path))
 	log.Printf("Size %v", proto.Size(s.config.Files[0]))
 }
 
 func TestNoMatch(t *testing.T) {
 	s := InitTestServer()
-	s.config.Files = append(s.config.Files, &pb.BackupFile{Path: "madeup"})
+	//s.config.Files = append(s.config.Files, &pb.BackupFile{Path: "madeup"})
 
 	err := s.processCloudFile(context.Background(), "madeup2")
 	if err != nil {
