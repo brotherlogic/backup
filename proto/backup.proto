@@ -15,7 +15,7 @@ message Config {
 }
 
 message BackupFile {
-  int32 date_seen = 2;
+  int32 date_seen = 1;
 
   enum BackupState {
     UNKNOWN = 0;
@@ -24,9 +24,9 @@ message BackupFile {
     MISSING = 3;
   }
 
-  BackupState state = 3;
-  int32 directory_hash = 4;
-  int32 filename_hash = 5;
+  BackupState state = 4;
+  int32 directory_hash = 2;
+  int32 filename_hash = 3;
 }
 
 message TokenRequest {
