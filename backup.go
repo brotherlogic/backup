@@ -134,16 +134,6 @@ func (s *Server) loadConfig(ctx context.Context) error {
 	}
 	s.config = config
 
-	// Trim any files with a file path
-	nFiles := make([]*pb.BackupFile, 0)
-	for _, f := range s.config.GetFiles() {
-		if len(f.Path) == 0 {
-			nFiles = append(nFiles, f)
-		}
-	}
-
-	s.config.Files = nFiles
-
 	return nil
 }
 
@@ -251,15 +241,7 @@ func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	if err != nil {
 		return time.Now().Add(time.Minute * 5), err
 	}
-	s.seen = make(map[string]bool)
 	t, err := time.Now().Add(WAITTIME), filepath.Walk("/media/raid1/", s.processFile)
-
-	// Set other files missing
-	for _, f := range s.config.Files {
-		if !s.seen[f.GetPath()] {
-			f.State = pb.BackupFile_MISSING
-		}
-	}
 
 	if err == nil {
 		err = s.KSclient.Save(ctx, CONFIG, s.config)
