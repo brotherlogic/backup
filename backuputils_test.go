@@ -76,3 +76,8 @@ func TestAlertOnSstats(t *testing.T) {
 	s := InitTestServer()
 	s.alertOnBadStats(context.Background(), []*pb.Stat{&pb.Stat{State: pb.BackupFile_NOT_BACKED_UP}})
 }
+
+func TestSize(t *testing.T) {
+	b := &pb.BackupFile{DateSeen: 1588041103, State: pb.BackupFile_NOT_BACKED_UP, DirectoryHash: 438442931, FilenameHash: -896055949}
+	log.Printf("SIZE = %v", proto.Size(b))
+}
