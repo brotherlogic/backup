@@ -134,6 +134,9 @@ func (s *Server) loadConfig(ctx context.Context) error {
 	}
 	s.config = config
 
+	// Force null
+	s.config.Files = make([]*pb.BackupFile, 0)
+
 	return nil
 }
 
