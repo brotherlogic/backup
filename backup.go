@@ -14,6 +14,8 @@ import (
 	"cloud.google.com/go/storage"
 	"github.com/brotherlogic/goserver"
 	"github.com/golang/protobuf/proto"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/iterator"
@@ -35,6 +37,17 @@ const (
 
 	//WAITTIME - time between runs
 	WAITTIME = time.Minute * 5
+)
+
+var (
+	backedup = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "backup_backedup",
+		Help: "Total number of files backed up",
+	})
+	notbackedup = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "backup_notbackedup",
+		Help: "Total number of files backed up",
+	})
 )
 
 //Server main server type
@@ -252,6 +265,24 @@ func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 	return t, err
 }
 
+func (s *Server) monitor(ctx context.Context) error {
+	bucount := 0
+	nbucount := 0
+	stats, _ := s.GetStats(ctx, &pb.StatsRequest{})
+	for _, stat := range stats.GetStats() {
+		if stat.GetState() == pb.BackupFile_NOT_BACKED_UP {
+			nbucount++
+		}
+		if stat.GetState() == pb.BackupFile_BACKED_UP {
+			bucount++
+		}
+	}
+
+	backedup.Set(float64(bucount))
+	notbackedup.Set(float64(nbucount))
+	return nil
+}
+
 func main() {
 	var quiet = flag.Bool("quiet", false, "Show all output")
 	flag.Parse()
@@ -273,6 +304,7 @@ func main() {
 	server.RegisterLockingTask(server.fsWalk, "fs_walk")
 	server.RegisterLockingTask(server.gcWalk, "gc_walk")
 	server.RegisterLockingTask(server.alertOnMismatch, "alert_on_mismatch")
+	server.RegisterRepeatingTaskNonMaster(server.monitor, "monitor", time.Minute)
 
 	fmt.Printf("%v", server.Serve())
 }
