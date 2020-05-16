@@ -272,10 +272,10 @@ func (s *Server) monitor(ctx context.Context) error {
 	s.Log(fmt.Sprintf("Processed %v files", len(stats.GetStats())))
 	for _, stat := range stats.GetStats() {
 		if stat.GetState() == pb.BackupFile_NOT_BACKED_UP {
-			nbucount++
+			nbucount += int(stat.GetCount())
 		}
 		if stat.GetState() == pb.BackupFile_BACKED_UP {
-			bucount++
+			bucount += int(stat.GetCount())
 		}
 	}
 
