@@ -23,7 +23,7 @@ func (s *Server) GetStats(ctx context.Context, req *pb.StatsRequest) (*pb.StatsR
 		}
 
 		if !found {
-			stats.Stats = append(stats.Stats, &pb.Stat{State: f.GetState(), Count: 1})
+			stats.Stats = append(stats.Stats, &pb.Stat{State: f.GetState(), Count: 1, Example: f})
 		}
 	}
 

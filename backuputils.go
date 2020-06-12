@@ -11,13 +11,18 @@ import (
 )
 
 func (s *Server) processFile(cpath string, info os.FileInfo, err error) error {
-	ctx, cancel := utils.ManualContext("process-file", "process-file", time.Minute)
+	ctx, cancel := utils.ManualContext("process-file", "process-file", time.Minute, false)
 	defer cancel()
 	pNum, fNum := s.intHashPath(ctx, cpath)
 	//s.seen[path] = true
 
 	found := false
 	for _, file := range s.config.GetFiles() {
+		b1, ok := s.resolver[file.GetDirectoryHash()]
+		if !ok {
+			b1 = make(map[int32]string)
+		}
+		b1[file.GetFilenameHash()] = cpath
 		if file.GetDirectoryHash() == pNum && file.GetFilenameHash() == fNum {
 			found = true
 		}
@@ -51,7 +56,12 @@ func (s *Server) alertOnMismatch(ctx context.Context) (time.Time, error) {
 func (s *Server) alertOnBadStats(ctx context.Context, stats []*pb.Stat) {
 	for _, stat := range stats {
 		if stat.GetState() == pb.BackupFile_NOT_BACKED_UP {
-			s.RaiseIssue(ctx, "Backup Issue", fmt.Sprintf("Some files are noot backed up"), false)
+			file := "UNKNOWN"
+			f, ok := s.resolver[stat.GetExample().GetDirectoryHash()]
+			if ok {
+				file = f[stat.GetExample().GetFilenameHash()]
+			}
+			s.RaiseIssue(ctx, "Backup Issue", fmt.Sprintf("Some files are noot backed up; for example %v", file), false)
 		}
 	}
 }

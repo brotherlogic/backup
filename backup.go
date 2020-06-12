@@ -58,6 +58,7 @@ type Server struct {
 	seen      map[string]bool
 	hashMutex *sync.Mutex
 	hashMap   map[int32]string
+	resolver  map[int32]map[int32]string
 }
 
 func (s *Server) intHashPath(ctx context.Context, path string) (int32, int32) {
@@ -112,6 +113,7 @@ func Init() *Server {
 		config:    &pb.Config{},
 		hashMap:   make(map[int32]string),
 		hashMutex: &sync.Mutex{},
+		resolver:  make(map[int32]map[int32]string),
 	}
 	return s
 }

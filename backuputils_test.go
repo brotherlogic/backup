@@ -74,7 +74,9 @@ func TestAlertOnMismatch(t *testing.T) {
 
 func TestAlertOnSstats(t *testing.T) {
 	s := InitTestServer()
-	s.alertOnBadStats(context.Background(), []*pb.Stat{&pb.Stat{State: pb.BackupFile_NOT_BACKED_UP}})
+	s.resolver[12] = make(map[int32]string)
+	s.resolver[12][12] = "blah"
+	s.alertOnBadStats(context.Background(), []*pb.Stat{&pb.Stat{State: pb.BackupFile_NOT_BACKED_UP, Example: &pb.BackupFile{FilenameHash: 12, DirectoryHash: 12}}})
 }
 
 func TestSize(t *testing.T) {

@@ -44,6 +44,7 @@ message StatsResponse {
 message Stat {
   BackupFile.BackupState state = 1;
   int32 count = 2;
+  BackupFile example = 3;
 }
 
 service BackupService {
