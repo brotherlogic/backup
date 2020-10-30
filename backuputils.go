@@ -61,7 +61,7 @@ func (s *Server) alertOnBadStats(ctx context.Context, stats []*pb.Stat) {
 			if ok {
 				file = f[stat.GetExample().GetFilenameHash()]
 			}
-			s.RaiseIssue(ctx, "Backup Issue", fmt.Sprintf("Some files are noot backed up; for example %v", file), false)
+			s.RaiseIssue("Backup Issue", fmt.Sprintf("Some files are noot backed up; for example %v", file))
 		}
 	}
 }

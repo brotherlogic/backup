@@ -16,6 +16,7 @@ import (
 func InitTestServer() *Server {
 	s := Init()
 	s.SkipLog = true
+	s.SkipIssue = true
 	s.seen = make(map[string]bool)
 	s.GoServer.KSclient = *keystoreclient.GetTestClient(".test")
 	return s
