@@ -82,7 +82,7 @@ func (s *Server) intHashPath(ctx context.Context, path string) (int32, int32) {
 		s.hashMap[pSum] = path[:slashIndex]
 	} else {
 		if path[:slashIndex] != val {
-			s.RaiseIssue(ctx, "Hash Clash", fmt.Sprintf("%v and %v have clashed", val, path[:slashIndex]), false)
+			s.RaiseIssue("Hash Clash", fmt.Sprintf("%v and %v have clashed", val, path[:slashIndex]))
 		}
 	}
 
@@ -90,7 +90,7 @@ func (s *Server) intHashPath(ctx context.Context, path string) (int32, int32) {
 		s.hashMap[fSum] = path[slashIndex+1:]
 	} else {
 		if path[slashIndex+1:] != val {
-			s.RaiseIssue(ctx, "Hash Clash", fmt.Sprintf("%v and %v have clashed", val, path[slashIndex+1:]), false)
+			s.RaiseIssue("Hash Clash", fmt.Sprintf("%v and %v have clashed", val, path[slashIndex+1:]))
 		}
 	}
 
@@ -299,15 +299,15 @@ func main() {
 	server.PrepServer()
 	server.Register = server
 
-	err := server.RegisterServerV2("backup", false, false)
+	err := server.RegisterServerV2("backup", false, true)
 	if err != nil {
 		return
 	}
 
-	server.RegisterLockingTask(server.fsWalk, "fs_walk")
-	server.RegisterLockingTask(server.gcWalk, "gc_walk")
-	server.RegisterLockingTask(server.alertOnMismatch, "alert_on_mismatch")
-	server.RegisterRepeatingTaskNonMaster(server.monitor, "monitor", time.Minute)
+	//server.RegisterLockingTask(server.fsWalk, "fs_walk")
+	//server.RegisterLockingTask(server.gcWalk, "gc_walk")
+	//server.RegisterLockingTask(server.alertOnMismatch, "alert_on_mismatch")
+	//server.RegisterRepeatingTaskNonMaster(server.monitor, "monitor", time.Minute)
 
 	fmt.Printf("%v", server.Serve())
 }
