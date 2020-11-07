@@ -229,6 +229,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 	query := &storage.Query{Prefix: ""}
 	it := bkt.Objects(ctx, query)
 	count := 0
+	flacCount := 0
 	for {
 		attrs, err := it.Next()
 		if err == iterator.Done {
@@ -241,10 +242,14 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 
 		s.processCloudFile(ctx, attrs.Name)
 		count++
+		if strings.HasSuffix(attrs.Name, "flac") {
+			flacCount++
+		}
 	}
 
 	s.Log(fmt.Sprintf("Processed %v cloud files (%v)", count, err))
 
+	s.RaiseIssue("Flac Backup", fmt.Sprintf("The flaccount is %v out of %v", flacCount, count))
 	return time.Now().Add(WAITTIME), s.KSclient.Save(ctx, CONFIG, s.config)
 }
 
