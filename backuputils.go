@@ -11,7 +11,7 @@ import (
 )
 
 func (s *Server) processFile(cpath string, info os.FileInfo, err error) error {
-	ctx, cancel := utils.ManualContext("process-file", "process-file", time.Minute, false)
+	ctx, cancel := utils.ManualContext("process-file", time.Minute)
 	defer cancel()
 	pNum, fNum := s.intHashPath(ctx, cpath)
 	//s.seen[path] = true
