@@ -10,6 +10,10 @@ import (
 	"golang.org/x/net/context"
 )
 
+func (s *Server) getAllServers(ctx context.Context) ([]string, error) {
+	return utils.LFFind(ctx, "discovery")
+}
+
 func (s *Server) processFile(cpath string, info os.FileInfo, err error) error {
 	ctx, cancel := utils.ManualContext("process-file", time.Minute)
 	defer cancel()

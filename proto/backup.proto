@@ -47,7 +47,11 @@ message Stat {
   BackupFile example = 3;
 }
 
+message RunBackupRequest {}
+message RunBackupResponse {}
+
 service BackupService {
   rpc SaveToken(TokenRequest) returns (TokenResponse) {};
   rpc GetStats(StatsRequest) returns (StatsResponse) {};
+  rpc RunBackup(RunBackupRequest) returns (RunBackupResponse) {};
 }

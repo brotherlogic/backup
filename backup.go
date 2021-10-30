@@ -309,10 +309,5 @@ func main() {
 		return
 	}
 
-	//server.RegisterLockingTask(server.fsWalk, "fs_walk")
-	//server.RegisterLockingTask(server.gcWalk, "gc_walk")
-	//server.RegisterLockingTask(server.alertOnMismatch, "alert_on_mismatch")
-	//server.RegisterRepeatingTaskNonMaster(server.monitor, "monitor", time.Minute)
-
 	fmt.Printf("%v", server.Serve())
 }
