@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
+
 	pb "github.com/brotherlogic/backup/proto"
+	epb "github.com/brotherlogic/executor/proto"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"golang.org/x/net/context"
@@ -21,6 +24,27 @@ func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.Run
 	}
 
 	serverCount.Set(float64(len(servers)))
+
+	for _, server := range servers {
+		conn, err := s.FDialSpecificServer(ctx, "executor", server)
+		if err != nil {
+			return nil, err
+		}
+		defer conn.Close()
+
+		client := epb.NewExecutorServiceClient(conn)
+		_, err = client.QueueExecute(ctx, &epb.ExecuteRequest{Command: &epb.Command{
+			Binary: "rsync",
+			Parameters: []string{
+				"-avz",
+				"--progress",
+				fmt.Sprintf("%v:/media/scratch/dlogs/", server),
+				"/media/raid/dlog-backup/"}}})
+		if err != nil {
+			return nil, err
+		}
+
+	}
 
 	return &pb.RunBackupResponse{}, nil
 }
