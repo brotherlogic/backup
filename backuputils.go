@@ -11,7 +11,7 @@ import (
 )
 
 func (s *Server) getAllServers(ctx context.Context) ([]string, error) {
-	return utils.LFFind(ctx, "discovery")
+	return utils.LFFind(ctx, "gobuildslave")
 }
 
 func (s *Server) processFile(cpath string, info os.FileInfo, err error) error {

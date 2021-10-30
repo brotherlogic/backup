@@ -6,9 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"time"
 
 	"github.com/brotherlogic/goserver/utils"
-	"google.golang.org/grpc"
 
 	pb "github.com/brotherlogic/backup/proto"
 
@@ -22,17 +22,20 @@ func init() {
 }
 
 func main() {
-	conn, err := grpc.Dial("discovery:///backup", grpc.WithInsecure(), grpc.WithBalancerName("my_pick_first"))
+	ctx, cancel := utils.ManualContext("backupcli-"+os.Args[1], time.Minute)
+	defer cancel()
+	conn, err := utils.LFDialServer(ctx, "backup")
 	if err != nil {
 		log.Fatalf("Unable to dial: %v", err)
 	}
 	defer conn.Close()
 
 	client := pb.NewBackupServiceClient(conn)
-	ctx, cancel := utils.BuildContext("backup-cli", "backup")
-	defer cancel()
 
 	switch os.Args[1] {
+	case "run":
+		_, err := client.RunBackup(ctx, &pb.RunBackupRequest{})
+		fmt.Printf("RAN: %v\n", err)
 	case "token":
 		tokenFlags := flag.NewFlagSet("TokenFlags", flag.ExitOnError)
 		var token = tokenFlags.String("token", "", "filename to load")
