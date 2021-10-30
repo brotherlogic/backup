@@ -26,7 +26,7 @@ func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.Run
 	serverCount.Set(float64(len(servers)))
 
 	for _, server := range servers {
-		conn, err := s.FDialSpecificServer(ctx, "executor", server)
+		conn, err := s.FDialSpecificServer(ctx, "executor", s.Registry.Identifier)
 		if err != nil {
 			return nil, err
 		}
