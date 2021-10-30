@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	pb "github.com/brotherlogic/backup/proto"
@@ -11,7 +12,16 @@ import (
 )
 
 func (s *Server) getAllServers(ctx context.Context) ([]string, error) {
-	return utils.LFFind(ctx, "gobuildslave")
+	res, err := utils.LFFind(ctx, "gobuildslave")
+	if err != nil {
+		return []string{}, err
+	}
+	var names []string
+	for _, name := range res {
+		fields := strings.Split(name, ":")
+		names = append(names, fields[0])
+	}
+	return names, nil
 }
 
 func (s *Server) processFile(cpath string, info os.FileInfo, err error) error {
