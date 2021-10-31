@@ -2,12 +2,17 @@ package main
 
 import (
 	"fmt"
+	"time"
 
-	pb "github.com/brotherlogic/backup/proto"
-	epb "github.com/brotherlogic/executor/proto"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"golang.org/x/net/context"
+	"google.golang.org/protobuf/proto"
+
+	pb "github.com/brotherlogic/backup/proto"
+	epb "github.com/brotherlogic/executor/proto"
+	qpb "github.com/brotherlogic/queue/proto"
+	google_protobuf "github.com/golang/protobuf/ptypes/any"
 )
 
 var (
@@ -46,7 +51,22 @@ func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.Run
 
 	}
 
-	return &pb.RunBackupResponse{}, nil
+	conn2, err2 := s.FDialServer(ctx, "queue")
+	if err2 != nil {
+		return nil, err2
+	}
+	defer conn2.Close()
+	qclient := qpb.NewQueueServiceClient(conn2)
+	upup := &pb.RunBackupRequest{}
+	data, _ := proto.Marshal(upup)
+	_, err3 := qclient.AddQueueItem(ctx, &qpb.AddQueueItemRequest{
+		QueueName: "run_backup",
+		RunTime:   time.Now().Add(time.Hour).Unix(),
+		Payload:   &google_protobuf.Any{Value: data},
+		Key:       fmt.Sprintf("backup-%v", time.Now().Add(time.Hour).Unix()),
+	})
+
+	return &pb.RunBackupResponse{}, err3
 }
 
 //SaveToken saves out the token
