@@ -38,13 +38,15 @@ func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.Run
 		defer conn.Close()
 
 		client := epb.NewExecutorServiceClient(conn)
-		_, err = client.QueueExecute(ctx, &epb.ExecuteRequest{Command: &epb.Command{
-			Binary: "rsync",
-			Parameters: []string{
-				"-avz",
-				"--progress",
-				fmt.Sprintf("%v:/media/scratch/dlogs/", server),
-				"/media/raid/dlog-backup/"}}})
+		_, err = client.QueueExecute(ctx, &epb.ExecuteRequest{
+			Command: &epb.Command{
+				Binary:           "rsync",
+				DeleteOnComplete: true,
+				Parameters: []string{
+					"-avz",
+					"--progress",
+					fmt.Sprintf("%v:/media/scratch/dlogs/", server),
+					"/media/raid/dlog-backup/"}}})
 		if err != nil {
 			return nil, err
 		}
