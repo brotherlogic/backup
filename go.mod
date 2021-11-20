@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go/storage v1.18.2
 	github.com/brotherlogic/discovery v0.0.0-20211117024440-323a777c5472 // indirect
 	github.com/brotherlogic/dstore v0.0.0-20211118183202-5e74598fce2f // indirect
-	github.com/brotherlogic/executor v0.0.0-20211031183458-12327c9ee005
+	github.com/brotherlogic/executor v0.0.0-20211120173159-f8d35ba37d92
 	github.com/brotherlogic/gobuildslave v0.0.0-20211120004643-72c0beb2889d // indirect
 	github.com/brotherlogic/goserver v0.0.0-20211113203527-0c042db16f7a
 	github.com/brotherlogic/keystore v0.0.0-20201029130503-da423c07fd79
