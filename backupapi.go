@@ -21,7 +21,7 @@ var (
 		Help: "Push Size",
 	})
 	rsyncs = promauto.NewGaugeVec(prometheus.GaugeOpts{
-		Name: "backup_rsyns",
+		Name: "backup_rsyncs",
 		Help: "Push Size",
 	}, []string{"server"})
 )
