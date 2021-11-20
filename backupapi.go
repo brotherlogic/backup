@@ -20,6 +20,10 @@ var (
 		Name: "backup_servercount",
 		Help: "Push Size",
 	})
+	rsyncs = promauto.NewGaugeVec(prometheus.GaugeOpts{
+		Name: "backup_rsyns",
+		Help: "Push Size",
+	}, []string{"server"})
 )
 
 func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.RunBackupResponse, error) {
@@ -50,6 +54,7 @@ func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.Run
 		if err != nil {
 			return nil, err
 		}
+		rsyncs.With(prometheus.Labels{"server": server}).Inc()
 
 	}
 
