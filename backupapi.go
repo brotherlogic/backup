@@ -43,7 +43,7 @@ func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.Run
 
 		client := epb.NewExecutorServiceClient(conn)
 		_, err = client.QueueExecute(ctx, &epb.ExecuteRequest{
-			Key: "backup",
+			Key: fmt.Sprintf("backup-%v", server),
 			Command: &epb.Command{
 				Binary:           "rsync",
 				DeleteOnComplete: true,
