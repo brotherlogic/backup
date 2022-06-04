@@ -69,7 +69,7 @@ func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.Run
 	data, _ := proto.Marshal(upup)
 	_, err3 := qclient.AddQueueItem(ctx, &qpb.AddQueueItemRequest{
 		QueueName: "run_backup",
-		RunTime:   time.Now().Add(time.Hour).Unix(),
+		RunTime:   time.Now().Add(time.Hour * 24).Unix(),
 		Payload:   &google_protobuf.Any{Value: data},
 		Key:       fmt.Sprintf("backup-%v", time.Now().Add(time.Hour).Unix()),
 	})
