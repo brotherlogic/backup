@@ -4,10 +4,9 @@ go 1.16
 
 require (
 	cloud.google.com/go/storage v1.25.0
-	github.com/brotherlogic/buildserver v0.0.0-20220819190748-b6ea41420545 // indirect
-	github.com/brotherlogic/dstore v0.0.0-20220819190753-3b58e92c7504 // indirect
 	github.com/brotherlogic/executor v0.0.0-20220819190345-addbd70acdcd
-	github.com/brotherlogic/goserver v0.0.0-20220819181159-c728a3f047e7
+	github.com/brotherlogic/gobuildslave v0.0.0-20220819191710-840edde6b32a // indirect
+	github.com/brotherlogic/goserver v0.0.0-20220819191451-f33d62230933
 	github.com/brotherlogic/keystore v0.0.0-20220819190324-985dc407a45a
 	github.com/brotherlogic/queue v0.0.0-20220819190258-48dbb788f485
 	github.com/golang/protobuf v1.5.2
