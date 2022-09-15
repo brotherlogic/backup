@@ -247,7 +247,7 @@ func (s *Server) gcWalk(ctx context.Context) (time.Time, error) {
 		}
 	}
 
-	s.Log(fmt.Sprintf("Processed %v cloud files (%v)", count, err))
+	s.CtxLog(ctx, fmt.Sprintf("Processed %v cloud files (%v)", count, err))
 
 	s.RaiseIssue("Flac Backup", fmt.Sprintf("The flaccount is %v out of %v", flacCount, count))
 	return time.Now().Add(WAITTIME), s.KSclient.Save(ctx, CONFIG, s.config)
@@ -267,7 +267,7 @@ func (s *Server) fsWalk(ctx context.Context) (time.Time, error) {
 		err = s.KSclient.Save(ctx, CONFIG, s.config)
 	}
 
-	s.Log(fmt.Sprintf("Now there's %v files (but %v) -> %v => %v", len(s.config.GetFiles()), err, proto.Size(s.config), s.config.GetFiles()[0]))
+	s.CtxLog(ctx, fmt.Sprintf("Now there's %v files (but %v) -> %v => %v", len(s.config.GetFiles()), err, proto.Size(s.config), s.config.GetFiles()[0]))
 
 	return t, err
 }
@@ -276,7 +276,7 @@ func (s *Server) monitor(ctx context.Context) error {
 	bucount := 0
 	nbucount := 0
 	stats, _ := s.GetStats(ctx, &pb.StatsRequest{})
-	s.Log(fmt.Sprintf("Processed %v files", len(stats.GetStats())))
+	s.CtxLog(ctx, fmt.Sprintf("Processed %v files", len(stats.GetStats())))
 	for _, stat := range stats.GetStats() {
 		if stat.GetState() == pb.BackupFile_NOT_BACKED_UP {
 			nbucount += int(stat.GetCount())
