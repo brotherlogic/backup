@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/brotherlogic/keystore/client"
-	"github.com/golang/protobuf/proto"
+	"google.golang.org/protobuf/proto"
 	"golang.org/x/net/context"
 
 	pb "github.com/brotherlogic/backup/proto"

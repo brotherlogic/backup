@@ -13,7 +13,7 @@ import (
 
 	"cloud.google.com/go/storage"
 	"github.com/brotherlogic/goserver"
-	"github.com/golang/protobuf/proto"
+	"google.golang.org/protobuf/proto"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"golang.org/x/net/context"
