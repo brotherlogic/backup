@@ -1,3 +1,3 @@
 # backup
 
-Performs backups as needed
+Performs backups as needed.
