@@ -12,7 +12,7 @@ import (
 )
 
 func (s *Server) getAllServers(ctx context.Context) ([]string, error) {
-	res, err := utils.LFFind(ctx, "gobuildslave")
+	res, err := s.FFind(ctx, "gobuildslave")
 	if err != nil {
 		return []string{}, err
 	}
