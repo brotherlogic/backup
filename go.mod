@@ -5,7 +5,7 @@ go 1.19
 require (
 	cloud.google.com/go/storage v1.29.0
 	github.com/brotherlogic/executor v0.0.0-20230303181126-9839991229b9
-	github.com/brotherlogic/goserver v0.0.0-20230208171911-c95aab060a3f
+	github.com/brotherlogic/goserver v0.0.0-20230308065104-44cc7e357cc1
 	github.com/brotherlogic/keystore v0.0.0-20230224051333-d636e478d74b
 	github.com/brotherlogic/queue v0.0.0-20230303033713-4ef4466beb5d
 	github.com/golang/protobuf v1.5.2
@@ -44,7 +44,7 @@ require (
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/mitchellh/go-ps v1.0.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
-	github.com/prometheus/common v0.41.0 // indirect
+	github.com/prometheus/common v0.42.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/struCoder/pidusage v0.2.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
