@@ -8,13 +8,13 @@ require (
 	github.com/brotherlogic/goserver v0.0.0-20230308065104-44cc7e357cc1
 	github.com/brotherlogic/keystore v0.0.0-20230224051333-d636e478d74b
 	github.com/brotherlogic/queue v0.0.0-20230303033713-4ef4466beb5d
-	github.com/golang/protobuf v1.5.2
+	github.com/golang/protobuf v1.5.3
 	github.com/prometheus/client_golang v1.14.0
 	golang.org/x/net v0.8.0
 	golang.org/x/oauth2 v0.6.0
 	google.golang.org/api v0.111.0
 	google.golang.org/grpc v1.53.0
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.29.0
 )
 
 require (
