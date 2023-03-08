@@ -1424,8 +1424,9 @@ github.com/brotherlogic/goserver v0.0.0-20230113190359-3aaa706170c9/go.mod h1:Hp
 github.com/brotherlogic/goserver v0.0.0-20230117181550-4c6661b17d53/go.mod h1:HpuqkrA3u7ocgrs8GGoMDA6lLdtTZ5jU1iHe6vSVv9I=
 github.com/brotherlogic/goserver v0.0.0-20230129181741-2ea18e2cbc31/go.mod h1:vMWC0OPFjFEGB2bE90ymz64dtJlSgcItSFJjttUt6qw=
 github.com/brotherlogic/goserver v0.0.0-20230201210316-c2d059b39936/go.mod h1:S22R1E9LVceteoyVIRrcekAcnSmADsdMSF7XgCuteHU=
-github.com/brotherlogic/goserver v0.0.0-20230208171911-c95aab060a3f h1:cS0kuScVGRpGQkVb9YN2W8kRGpEX9Nr6ktRd87g7iCE=
 github.com/brotherlogic/goserver v0.0.0-20230208171911-c95aab060a3f/go.mod h1:S22R1E9LVceteoyVIRrcekAcnSmADsdMSF7XgCuteHU=
+github.com/brotherlogic/goserver v0.0.0-20230308065104-44cc7e357cc1 h1:cUK5j/ChYSFUzW92cpZjZVTDr2uEpdvGCEgySx6fG38=
+github.com/brotherlogic/goserver v0.0.0-20230308065104-44cc7e357cc1/go.mod h1:S22R1E9LVceteoyVIRrcekAcnSmADsdMSF7XgCuteHU=
 github.com/brotherlogic/keymapper v0.0.0-20201116203852-f939ef86e1a2/go.mod h1:bZEHwfvamDSiweU+qiuNXmK5hUteKykayCtBVEOcq1U=
 github.com/brotherlogic/keymapper v0.0.0-20210311144023-8fb7e9401321/go.mod h1:cUAjkXcFmwSRCtsgbM/vmBu+rRexe1YOw5/PmGDwFw8=
 github.com/brotherlogic/keymapper v0.0.0-20210820140329-0a4c6cea65e8/go.mod h1:h1g13dewznZrv1+SHrh360wy+dK6iXS5042TiC8b4bY=
@@ -2925,8 +2926,9 @@ github.com/prometheus/common v0.37.0/go.mod h1:phzohg0JFMnBEFGxTDbfu3QyL5GI8gTQJ
 github.com/prometheus/common v0.38.0/go.mod h1:MBXfmBQZrK5XpbCkjofnXs96LD2QQ7fEq4C0xjC/yec=
 github.com/prometheus/common v0.39.0/go.mod h1:6XBZ7lYdLCbkAVhwRsWTZn+IN5AB9F/NXd5w0BbEX0Y=
 github.com/prometheus/common v0.40.0/go.mod h1:L65ZJPSmfn/UBWLQIHV7dBrKFidB/wPlF1y5TlSt9OE=
-github.com/prometheus/common v0.41.0 h1:npo01n6vUlRViIj5fgwiK8vlNIh8bnoxqh3gypKsyAw=
 github.com/prometheus/common v0.41.0/go.mod h1:xBwqVerjNdUDjgODMpudtOMwlOwf2SaTr1yjz4b7Zbc=
+github.com/prometheus/common v0.42.0 h1:EKsfXEYo4JpWMHH5cg+KOUWeuJSov1Id8zGR8eeI1YM=
+github.com/prometheus/common v0.42.0/go.mod h1:xBwqVerjNdUDjgODMpudtOMwlOwf2SaTr1yjz4b7Zbc=
 github.com/prometheus/procfs v0.0.0-20181005140218-185b4288413d/go.mod h1:c3At6R/oaqEKCNdg8wHV1ftS6bRYblBhIjjI8uT2IGk=
 github.com/prometheus/procfs v0.0.0-20190117184657-bf6a532e95b1/go.mod h1:c3At6R/oaqEKCNdg8wHV1ftS6bRYblBhIjjI8uT2IGk=
 github.com/prometheus/procfs v0.0.2/go.mod h1:TjEm7ze935MbeOT/UhFTIMYKhuLP4wbCsTZCD3I8kEA=
