@@ -5,7 +5,7 @@ go 1.19
 require (
 	cloud.google.com/go/storage v1.29.0
 	github.com/brotherlogic/executor v0.0.0-20230303181126-9839991229b9
-	github.com/brotherlogic/goserver v0.0.0-20230308065104-44cc7e357cc1
+	github.com/brotherlogic/goserver v0.0.0-20230309052710-27200cfe2365
 	github.com/brotherlogic/keystore v0.0.0-20230224051333-d636e478d74b
 	github.com/brotherlogic/queue v0.0.0-20230303033713-4ef4466beb5d
 	github.com/golang/protobuf v1.5.3
