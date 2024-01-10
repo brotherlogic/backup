@@ -71,13 +71,13 @@ func (s *Server) RunBackup(ctx context.Context, _ *pb.RunBackupRequest) (*pb.Run
 		QueueName: "run_backup",
 		RunTime:   time.Now().Add(time.Hour * 24).Unix(),
 		Payload:   &google_protobuf.Any{Value: data},
-		Key:       fmt.Sprintf("backup-%v", time.Now().Add(time.Hour).Unix()),
+		Key:       fmt.Sprintf("backup-%v", time.Now().Add(time.Hour).Format("2006-01-02")),
 	})
 
 	return &pb.RunBackupResponse{}, err3
 }
 
-//SaveToken saves out the token
+// SaveToken saves out the token
 func (s *Server) SaveToken(ctx context.Context, req *pb.TokenRequest) (*pb.TokenResponse, error) {
 	return &pb.TokenResponse{}, s.KSclient.Save(ctx, TOKEN, req.GetToken())
 }
