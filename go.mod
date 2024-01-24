@@ -3,17 +3,17 @@ module github.com/brotherlogic/backup
 go 1.19
 
 require (
-	cloud.google.com/go/storage v1.36.0
-	github.com/brotherlogic/executor v0.0.0-20240115223124-0b1957478b77
+	cloud.google.com/go/storage v1.37.0
+	github.com/brotherlogic/executor v0.0.0-20240122224849-fc0824d079be
 	github.com/brotherlogic/goserver v0.0.0-20230726200050-779ae6811580
-	github.com/brotherlogic/keystore v0.0.0-20240115213042-362535ff9cd2
-	github.com/brotherlogic/queue v0.0.0-20240117080247-8d2762b09c03
+	github.com/brotherlogic/keystore v0.0.0-20240122235035-9a5e1481c952
+	github.com/brotherlogic/queue v0.0.0-20240124081848-13cce181411d
 	github.com/golang/protobuf v1.5.3
 	github.com/prometheus/client_golang v1.18.0
 	golang.org/x/net v0.20.0
 	golang.org/x/oauth2 v0.16.0
-	google.golang.org/api v0.156.0
-	google.golang.org/grpc v1.60.1
+	google.golang.org/api v0.157.0
+	google.golang.org/grpc v1.61.0
 	google.golang.org/protobuf v1.32.0
 )
 
@@ -23,14 +23,14 @@ require (
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v1.1.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/brotherlogic/buildserver v0.0.0-20240114054411-a835f3cb4835 // indirect
-	github.com/brotherlogic/datastore v0.0.0-20240115181049-8eb2e5f4c132 // indirect
-	github.com/brotherlogic/discovery v0.0.0-20240115063259-7007936a83a4 // indirect
-	github.com/brotherlogic/dstore v0.0.0-20240110235822-65994e72bc43 // indirect
-	github.com/brotherlogic/githubcard v0.0.0-20240116022458-50b1e7ca3ca8 // indirect
-	github.com/brotherlogic/gobuildslave v0.0.0-20240110214734-584b5131eb7e // indirect
-	github.com/brotherlogic/lock v0.0.0-20240115172504-71f29ba3b898 // indirect
-	github.com/brotherlogic/logging v0.0.0-20240112191113-14e68b54e2b2 // indirect
+	github.com/brotherlogic/buildserver v0.0.0-20240121183122-9a5a32bb2de0 // indirect
+	github.com/brotherlogic/datastore v0.0.0-20240122184514-045f118d85a8 // indirect
+	github.com/brotherlogic/discovery v0.0.0-20240122072427-a7a3cd25d46c // indirect
+	github.com/brotherlogic/dstore v0.0.0-20240118011651-258f2d409c14 // indirect
+	github.com/brotherlogic/githubcard v0.0.0-20240123024904-1d8ced299888 // indirect
+	github.com/brotherlogic/gobuildslave v0.0.0-20240118013403-3043d5c61d14 // indirect
+	github.com/brotherlogic/lock v0.0.0-20240122185548-08ff6a89f3f4 // indirect
+	github.com/brotherlogic/logging v0.0.0-20240119194838-225f5d9b6de0 // indirect
 	github.com/brotherlogic/monitor v0.0.0-20221025152653-c10877c5f9e6 // indirect
 	github.com/brotherlogic/versionserver v0.0.0-20221025154054-c9bcd41be2f2 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
@@ -39,7 +39,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/google/s2a-go v0.1.7 // indirect
-	github.com/google/uuid v1.5.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.0 // indirect
 	github.com/mitchellh/go-ps v1.0.0 // indirect
@@ -48,8 +48,8 @@ require (
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/struCoder/pidusage v0.2.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.46.1 // indirect
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.46.1 // indirect
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.47.0 // indirect
+	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.47.0 // indirect
 	go.opentelemetry.io/otel v1.22.0 // indirect
 	go.opentelemetry.io/otel/metric v1.22.0 // indirect
 	go.opentelemetry.io/otel/trace v1.22.0 // indirect
@@ -59,7 +59,7 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto v0.0.0-20240116215550-a9fa1716bcac // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240116215550-a9fa1716bcac // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240116215550-a9fa1716bcac // indirect
+	google.golang.org/genproto v0.0.0-20240123012728-ef4313101c80 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240123012728-ef4313101c80 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240123012728-ef4313101c80 // indirect
 )
