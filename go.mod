@@ -4,10 +4,10 @@ go 1.22.1
 
 require (
 	cloud.google.com/go/storage v1.43.0
-	github.com/brotherlogic/executor v0.0.0-20240705220711-1ce0f85aa626
+	github.com/brotherlogic/executor v0.0.0-20240705221459-ce0a97bb67ee
 	github.com/brotherlogic/goserver v0.0.0-20240303220030-80da220f0393
 	github.com/brotherlogic/keystore v0.0.0-20240508161349-814b3200b126
-	github.com/brotherlogic/queue v0.0.0-20240705221202-39a258a2ae8a
+	github.com/brotherlogic/queue v0.0.0-20240705221559-d21223717c9a
 	github.com/golang/protobuf v1.5.4
 	github.com/prometheus/client_golang v1.19.1
 	golang.org/x/net v0.27.0
