@@ -7,7 +7,7 @@ require (
 	github.com/brotherlogic/executor v0.0.0-20240712220324-f99e1f188799
 	github.com/brotherlogic/goserver v0.0.0-20240303220030-80da220f0393
 	github.com/brotherlogic/keystore v0.0.0-20240508161349-814b3200b126
-	github.com/brotherlogic/queue v0.0.0-20240712222903-cdd1671af4f1
+	github.com/brotherlogic/queue v0.0.0-20240712224922-bf95cba2d646
 	github.com/golang/protobuf v1.5.4
 	github.com/prometheus/client_golang v1.19.1
 	golang.org/x/net v0.27.0
@@ -24,7 +24,7 @@ require (
 	cloud.google.com/go/compute/metadata v0.5.0 // indirect
 	cloud.google.com/go/iam v1.1.11 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/brotherlogic/buildserver v0.0.0-20240712222116-b7c4de822801 // indirect
+	github.com/brotherlogic/buildserver v0.0.0-20240712224349-f978b35e1781 // indirect
 	github.com/brotherlogic/datastore v0.0.0-20240712025237-0166a6618dac // indirect
 	github.com/brotherlogic/discovery v0.0.0-20240708161113-0bb9cf92cda7 // indirect
 	github.com/brotherlogic/dstore v0.0.0-20240712175918-ed573b257ee6 // indirect
