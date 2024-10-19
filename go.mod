@@ -33,13 +33,13 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/brotherlogic/buildserver v0.0.0-20241019052424-57d6e0feaa55 // indirect
 	github.com/brotherlogic/datastore v0.0.0-20240830190304-3b849e438317 // indirect
-	github.com/brotherlogic/discovery v0.0.0-20241019162749-cc4f0ce03456 // indirect
+	github.com/brotherlogic/discovery v0.0.0-20241019174757-a28906468083 // indirect
 	github.com/brotherlogic/dstore v0.0.0-20241019012445-0a0ddd903d24 // indirect
 	github.com/brotherlogic/githubcard v0.0.0-20241016090926-1b1ce97da5fe // indirect
 	github.com/brotherlogic/githubridge v0.2802.0 // indirect
 	github.com/brotherlogic/gobuildslave v0.0.0-20241014042725-ab61314fc274 // indirect
 	github.com/brotherlogic/lock v0.0.0-20241016092357-1bb58df36fea // indirect
-	github.com/brotherlogic/logging v0.0.0-20241012170930-158c4608aebd // indirect
+	github.com/brotherlogic/logging v0.0.0-20241019172747-671159a8153c // indirect
 	github.com/brotherlogic/monitor v0.0.0-20221025152653-c10877c5f9e6 // indirect
 	github.com/brotherlogic/versionserver v0.0.0-20221025154054-c9bcd41be2f2 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
