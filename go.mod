@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	cloud.google.com/go/storage v1.47.0
-	github.com/brotherlogic/executor v0.0.0-20241120014644-75e4dcf1a839
+	github.com/brotherlogic/executor v0.0.0-20241130130715-a399508daecb
 	github.com/brotherlogic/goserver v0.0.0-20240826215223-fccbac46b3d4
 	github.com/brotherlogic/keystore v0.0.0-20240508161349-814b3200b126
 	github.com/brotherlogic/queue v0.0.0-20241120125722-55ce3c0e7abf
@@ -34,7 +34,7 @@ require (
 	github.com/brotherlogic/discovery v0.0.0-20241109204028-02908558af09 // indirect
 	github.com/brotherlogic/dstore v0.0.0-20241109024657-6ae3fcb5a6c1 // indirect
 	github.com/brotherlogic/githubcard v0.0.0-20241120095545-56f840e19fc6 // indirect
-	github.com/brotherlogic/githubridge v0.2814.0 // indirect
+	github.com/brotherlogic/githubridge v0.2816.0 // indirect
 	github.com/brotherlogic/gobuildslave v0.0.0-20241111085829-8d4e5069a7fd // indirect
 	github.com/brotherlogic/lock v0.0.0-20241120105707-452015a953e4 // indirect
 	github.com/brotherlogic/logging v0.0.0-20241120014335-4bcf98cd731e // indirect
@@ -48,7 +48,7 @@ require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/google/s2a-go v0.1.8 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect
