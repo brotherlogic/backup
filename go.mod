@@ -4,10 +4,10 @@ go 1.23.2
 
 require (
 	cloud.google.com/go/storage v1.47.0
-	github.com/brotherlogic/executor v0.0.0-20241201031908-8dbd5b415173
+	github.com/brotherlogic/executor v0.0.0-20241201200253-6ca4c6f2e5a7
 	github.com/brotherlogic/goserver v0.0.0-20240826215223-fccbac46b3d4
 	github.com/brotherlogic/keystore v0.0.0-20240508161349-814b3200b126
-	github.com/brotherlogic/queue v0.0.0-20241201031024-dec91957670c
+	github.com/brotherlogic/queue v0.0.0-20241201213706-5b1c8a1eb298
 	github.com/golang/protobuf v1.5.4
 	github.com/prometheus/client_golang v1.20.5
 	golang.org/x/net v0.31.0
@@ -29,15 +29,15 @@ require (
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.49.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.49.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/brotherlogic/buildserver v0.0.0-20241124212151-187a7b28453f // indirect
-	github.com/brotherlogic/datastore v0.0.0-20240830190304-3b849e438317 // indirect
+	github.com/brotherlogic/buildserver v0.0.0-20241201220510-afd5cda3047a // indirect
+	github.com/brotherlogic/datastore v0.0.0-20241201191513-ffa38d417af8 // indirect
 	github.com/brotherlogic/discovery v0.0.0-20241109204028-02908558af09 // indirect
 	github.com/brotherlogic/dstore v0.0.0-20241109024657-6ae3fcb5a6c1 // indirect
-	github.com/brotherlogic/githubcard v0.0.0-20241120095545-56f840e19fc6 // indirect
-	github.com/brotherlogic/githubridge v0.2816.0 // indirect
+	github.com/brotherlogic/githubcard v0.0.0-20241202012516-5604bb0b53f9 // indirect
+	github.com/brotherlogic/githubridge v0.2819.0 // indirect
 	github.com/brotherlogic/gobuildslave v0.0.0-20241111085829-8d4e5069a7fd // indirect
-	github.com/brotherlogic/lock v0.0.0-20241201021536-67dee6753a3f // indirect
-	github.com/brotherlogic/logging v0.0.0-20241201031642-a4c3163a66da // indirect
+	github.com/brotherlogic/lock v0.0.0-20241201190822-e7ca46842e65 // indirect
+	github.com/brotherlogic/logging v0.0.0-20241201194748-80c4a85855f6 // indirect
 	github.com/brotherlogic/monitor v0.0.0-20221025152653-c10877c5f9e6 // indirect
 	github.com/brotherlogic/versionserver v0.0.0-20221025154054-c9bcd41be2f2 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
