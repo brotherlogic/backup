@@ -10,7 +10,7 @@ require (
 	github.com/brotherlogic/queue v0.0.0-20241208214752-b203a6837d91
 	github.com/golang/protobuf v1.5.4
 	github.com/prometheus/client_golang v1.20.5
-	golang.org/x/net v0.32.0
+	golang.org/x/net v0.36.0
 	golang.org/x/oauth2 v0.24.0
 	google.golang.org/api v0.210.0
 	google.golang.org/grpc v1.68.1
@@ -70,10 +70,10 @@ require (
 	go.opentelemetry.io/otel/sdk v1.32.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.32.0 // indirect
 	go.opentelemetry.io/otel/trace v1.32.0 // indirect
-	golang.org/x/crypto v0.30.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/crypto v0.35.0 // indirect
+	golang.org/x/sync v0.11.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
 	google.golang.org/genproto v0.0.0-20241206012308-a4fef0638583 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20241206012308-a4fef0638583 // indirect
